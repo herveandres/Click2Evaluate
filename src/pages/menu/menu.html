@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button iocon-left (click)='changeStudent()'> <ion-icon name='add'></ion-icon> Qqn d'autre </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="this.connected">
+  <h2> Bonjour {{ this.ldap }} ! </h2>
+  <p> Vous suivez les cours suivants n'est-ce pas ? </p>
+  <ion-list>
+    <ion-item *ngFor='let course of courses'>
+      <button ion-button (click)='openSurvey()'></button>
+      <h3> {{ course.label }} </h3>
+    </ion-item>
+  </ion-list>
+</div>
+<div *ngIf="!connected">
+  <h2> Aucun cours à afficher, vous n'êtes pas connecté ! </h2>
+</div>
+</ion-content>

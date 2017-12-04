@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Questionnaire
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  Bonjour, vous allez donner votre avis sur le module suivant : ModuleTest.
+
+  <ion-card>
+    <ion-card-header>
+      Existence *
+    </ion-card-header>
+    <ion-card-content>
+      Pensez-vous que ce module doit être maintenu ?
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label>Existence</ion-label>
+    <ion-select [(ngModel)]="existence">
+      <ion-option value="1">Oui, sans changements</ion-option>
+      <ion-option value="2">Oui, avec des changements mineurs</ion-option>
+      <ion-option value="3">Oui, avec des changements majeurs</ion-option>
+      <ion-option value="4">Non</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header>
+      Objectifs *
+    </ion-card-header>
+    <ion-card-content>
+      Les objectifs du module sont-ils atteints pour vous ?
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label>Objectifs</ion-label>
+    <ion-select [(ngModel)]="objectifs">
+      <ion-option value="1">Tout à fait</ion-option>
+      <ion-option value="2">Plutôt oui</ion-option>
+      <ion-option value="3">Plutôt non</ion-option>
+      <ion-option value="4">Pas du tout</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header>
+      Temps de travail *
+    </ion-card-header>
+    <ion-card-content>
+      A combien estimez-vous le temps total (heures de cours, temps de travail personnel, etc.) consacré à ce module (en heures) ?
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-input type="number" placeholder="Temps de travail"></ion-input>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header>
+      Equilibre du temps de travail *
+    </ion-card-header>
+    <ion-card-content>
+      L'équilibre entre le travail en séance et hors séance est-il adéquat ?
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label>Equilibre</ion-label>
+    <ion-select [(ngModel)]="equilibre">
+      <ion-option value="1">Tout à fait</ion-option>
+      <ion-option value="2">Plutôt oui</ion-option>
+      <ion-option value="3">Plutôt non</ion-option>
+      <ion-option value="4">Pas du tout</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header>
+      Commentaires
+    </ion-card-header>
+    <ion-card-content>
+      Souhaitez-vous en dire plus sur les :
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-label color="black" floating>Contenus</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Enseignants</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Amphis, projets, TP, TD, TPA</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Activités en autonomie</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Supports de cours</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Ressources numériques</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Séances préférées</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Séances détestées</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Modalités de validation</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="black" floating>Autres choses</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+
+  <ion-card>
+    <ion-card-header>
+      Fin du questionnaire
+    </ion-card-header>
+    <ion-card-content>
+      Ce questionnaire est maintenant terminé, avez-vous un dernier commentaire ?
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-input type="text"></ion-input>
+  </ion-item>
+
+  <button ion-button block>Envoyer</button>
+
+</ion-content>
