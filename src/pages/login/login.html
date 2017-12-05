@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Connexion
+      Click2Evaluate
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -11,8 +11,8 @@
     <ion-list>
 
         <ion-item>
-          <ion-input type="email" placeholder="Adresse LDAP" [(ngModel)]="account.email" [ngModelOptions]="{standalone: true}" ></ion-input>
-        </ion-item> 
+          <ion-input type="email" placeholder="prenom.nom@enpc.fr" [(ngModel)]="account.email" [ngModelOptions]="{standalone: true}" ></ion-input>
+        </ion-item>
 
         <ion-item>
           <ion-input type="password" placeholder="Mot de passe" [(ngModel)]="account.password" [ngModelOptions]="{standalone: true}"></ion-input>
@@ -22,11 +22,13 @@
           <ion-label>Rester connecté</ion-label>
           <ion-checkbox checked="true"></ion-checkbox>
         </ion-item>
-
+        <p *ngIf="incorrectAuthentification">
+          Identifiant ou mot de passe incorrect.
+        </p>
         <div padding>
             <button ion-button color="primary" block>Se connecter</button>
-        </div>  
+        </div>
       </ion-list>
   </form>
-    
+
 </ion-content>

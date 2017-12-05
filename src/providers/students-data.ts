@@ -4,6 +4,10 @@ import 'rxjs/add/operator/map';
 
 import { CourseData } from '../providers/course-data';
 
+// Connect somebody (verify if ldap and password corresponding)
+// and download the list of his courses
+// If stayConnected save the data in the local storage (TODO)
+// Now it works with .json files in assets/data/
 
 @Injectable()
 export class StudentsData{
@@ -13,10 +17,10 @@ export class StudentsData{
 
 
   constructor(public http: Http){
-    console.log('In the constructor');
   }
 
-  connect(ldap: string){
+  connect(ldap: string, password: string){
+    this.courses = [];
     console.log("Trying to connect : " + ldap);
     this.ldap = ldap;
     return new Promise(resolve => {
@@ -67,6 +71,13 @@ export class StudentsData{
         //console.log(data.filter(h => h.Id == code_module)[0]);
         resolve(this.courses);})
       })
+  }
+
+  // remove everything we already know from the smarphone
+  // Caution : we have to send the answers.
+  disconnect(){
+    this.connected = false;
+    this.courses = [];
   }
 
 

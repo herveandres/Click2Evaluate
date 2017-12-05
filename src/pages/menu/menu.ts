@@ -1,38 +1,33 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+
 import { StudentsData } from "../../providers/students-data";
-import {SurveyPage} from "../survey/survey";
+import { SurveyData } from "../../providers/survey-data";
+import { CourseData } from "../../providers/course-data";
+
+import { SurveyPage } from "../survey/survey";
+import { LoginPage } from "../login/login";
 
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html'
 })
 export class MenuPage {
-  courses: Array<Object> = [];
-  connected: boolean = false;
-  ldap: string = "";
 
-  constructor(public navCtrl: NavController, public studentsData: StudentsData) {
-    this.changeStudent();
+  constructor(public navCtrl: NavController, public studentsData: StudentsData, public surveyData:SurveyData){
+
+    if(this.studentsData.connected){
+      this.studentsData.getCourses();
+    }
+
   }
 
-  changeStudent(){
-    let newLdap = prompt('Quel est votre ldap ?');
-    // let newLdap = "marc-antoine.auge@enpc.fr";
-    if (newLdap !== ''){
-      this.ldap = newLdap;
-      this.studentsData.connect(newLdap).then(
-        (theResult:boolean) => {this.connected = theResult;
-        if(this.connected){
-          this.studentsData.getCourses().then(
-            (courses_found:Array<Object>) => {this.courses = courses_found;}
-          );
-        }}
-      )}
+  openSurvey(course: CourseData){
+      this.surveyData.getSurvey(course).then(res => {this.navCtrl.push(SurveyPage);});
   }
-  openSurvey(){
-     this.navCtrl.push(SurveyPage);
+  disconnect(){
+    this.studentsData.disconnect();
+    this.navCtrl.setRoot(LoginPage);
   }
-
 
 }

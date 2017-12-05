@@ -1,14 +1,15 @@
-
+// Structure of "course"
+// work with students-data.ts
 
 export class CourseData{
-  id: string;
-  label: string;
+  id: string;           // ex. "TDLOG"
+  label: string;        // ex. "Techniques de développement logiciel"
   answered: boolean;
-  group: number;
-  delegate: string; // ldap
-  commissionsDate: any;
-  availableDate: any;
-  typeForm: string;    // label corresponding to the form used for this course evaluation
+  group: number;        // between 0 and n. 0 if no group
+  delegate: string;     // ex. "antoine.dupont@enpc.fr" if antoine Dupont is the delegate for this group
+  commissionsDate: any; // it's impossible to answer after this date
+  availableDate: any;   // it's impossible to answer before this date (ex. a day after the exam)
+  typeForm: string;     // label corresponding to the form used for this course evaluation. Default = "Classique"
 
   constructor(data: any, group: number){
     console.log("Adding : " + data.Id + " for the group " + group);

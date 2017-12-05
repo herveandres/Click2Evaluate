@@ -4,11 +4,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
-import {StudentsData} from '../providers/students-data';
+import { StudentsData } from '../providers/students-data';
+import { SurveyData } from '../providers/survey-data';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [StudentsData]
+  providers: [StudentsData, SurveyData]
 })
 export class MyApp {
   rootPage:any = LoginPage;
@@ -22,4 +23,3 @@ export class MyApp {
     });
   }
 }
-
