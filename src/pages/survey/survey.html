@@ -10,46 +10,63 @@
   <ion-slides>
     <!-- begin -->
     <ion-slide>
-      Vous allez évaluer le cours : {{ surveyData.course.label }}.
+      Vous allez évaluer le module : {{ surveyData.course.label }}.
     </ion-slide>
     <!-- questions -->
       <ion-slide *ngFor="let question of surveyData.survey">
-        <div *ngIf='question.obligatory=="true"'>
-          <ion-icon  name='alert'></ion-icon>
-          Question obligatoire
+          <!-- Si la question est obligatoire, on affiche un logo + 'question obligatoire' -->
+          <div *ngIf='question.obligatory=="true"'>
+            <ion-icon  name='alert'></ion-icon>
+            Question obligatoire
+          </div>
 
-        </div>
+          <!-- On affiche la question suivant le type de celle-ci -->
+          <div *ngIf='question.type == "inline"'>
+            <h2> {{ question.label }} </h2>
+            <ion-input type="text" [(ngModel)]="question.answer"
+                placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">
+              </ion-input>
 
-        <div *ngIf='question.type == "inline"'>
-          <h2> {{ question.label }} </h2>
-          <ion-input type="text" [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-input>
+          </div>
 
-        </div>
+          <div *ngIf='question.type == "text"'>
+            <h2> {{ question.label }} </h2>
+            <ion-textarea [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
+          </div>
 
-        <div *ngIf='question.type == "text"'>
-          <h2> {{ question.label }} </h2>
-          <ion-textarea [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
-        </div>
+          <!-- TODO faire en sorte qu'on puisse sélectionner une seule réponse ! -->
+          <div *ngIf='question.type == "selectOne"'>
+            <h2> {{ question.label }} </h2>
+            <ion-select  multiple="false">
+             <ion-option *ngFor="let choice of question.type_data" [value]=choice.index>
+               {{ choice }}
+             </ion-option>
+           </ion-select>
+          </div>
 
-        <div *ngIf='question.type == "select"'>
-          <h2> {{ question.label }} </h2>
-          <ion-select [(ngModel)]="question.answer">
-           <ion-option *ngFor="let choice of question.type_data" [value]="choice.index">
-             {{ choice }}
-           </ion-option>
-          </ion-select>
-        </div>
+          <div *ngIf='question.type == "select"'>
+            <h2> {{ question.label }} </h2>
+            <ion-select  multiple="true">
+             <ion-option *ngFor="let choice of question.type_data" [value]=choice.index>
+               {{ choice }}
+             </ion-option>
+           </ion-select>
+          </div>
 
-        <div *ngIf='question.type == "number"'>
-          <h2> {{ question.label }} </h2> <!-- Rajouter les bornes -->
-           <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
-        </div>
-
+          <div *ngIf='question.type == "number"'>
+            <h2> {{ question.label }} </h2> <!-- Rajouter les bornes -->
+             <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
+          </div>
 
       </ion-slide>
     <!-- end -->
     <ion-slide>
-        Le S2IP vous remercie pour votre évaluation qui permettra d'améliorer les prochains cours.
+      Nous vous remercions pour vos réponses...
+      Une dernière remarque ?
+      <ion-input type="text"> </ion-input>
+      <div padding>
+          <button ion-button color="primary" block> Envoyer mes réponses </button>
+      </div>
     </ion-slide>
 </ion-slides>
 

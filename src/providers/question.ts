@@ -18,6 +18,7 @@ export class Question{
   type_data: Array<any>;// for "text" and "inline": []
                         // for "number" Array<number> = [begin, end]
                         // for "select" Array<string> = [choice1, choice2, ..., choiceN]
+  isSub:string;         // "true" iff the question is a subquestion
    constructor(q: any){
      this.id = q.id;
      this.label = q.label;
