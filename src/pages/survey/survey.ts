@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { SurveyData } from '../../providers/survey-data';
 import { Question } from '../../providers/question';
+
+import { MenuPage } from '../menu/menu';
 
 @Component({
   selector: 'page-survey',
@@ -15,7 +17,16 @@ export class SurveyPage {
 
   }
   display(){
-    console.log(this.surveyData.survey);
+  //this.save_answers();
+  }
+
+  ionViewWillLeave(){
+    this.surveyData.save();
+    console.log("bye");
+  }
+
+  send_survey(){
+    this.navCtrl.setRoot(MenuPage);
   }
 
   displayable(question:Question){

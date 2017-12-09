@@ -11,7 +11,7 @@ import { SurveyData } from '../providers/survey-data';
   templateUrl: 'app.html',
   providers: [StudentsData, SurveyData]
 })
-export class MyApp {
+export class Click2Evaluate {
   rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public studentsData: StudentsData) {
