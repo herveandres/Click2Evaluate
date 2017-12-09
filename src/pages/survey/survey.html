@@ -7,58 +7,63 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-slides>
+  <ion-slides (ionSlideDrag)="display()">
     <!-- begin -->
     <ion-slide>
       Vous allez évaluer le module : {{ surveyData.course.label }}.
     </ion-slide>
     <!-- questions -->
-      <ion-slide *ngFor="let question of surveyData.survey">
+    <div *ngFor="let question of surveyData.survey">
+
+        <ion-slide  *ngIf="displayable(question)">
+
           <!-- Si la question est obligatoire, on affiche un logo + 'question obligatoire' -->
-          <div *ngIf='question.obligatory=="true"'>
+          <div *ngIf='question.obligatory'>
             <ion-icon  name='alert'></ion-icon>
             Question obligatoire
           </div>
 
           <!-- On affiche la question suivant le type de celle-ci -->
-          <div *ngIf='question.type == "inline"'>
-            <h2> {{ question.label }} </h2>
+          <ion-item *ngIf='question.type == "inline"'>
+            <ion-label> {{ question.label }} </ion-label>
             <ion-input type="text" [(ngModel)]="question.answer"
                 placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">
               </ion-input>
 
-          </div>
+          </ion-item>
 
-          <div *ngIf='question.type == "text"'>
-            <h2> {{ question.label }} </h2>
+          <ion-item *ngIf='question.type == "text"'>
+            <ion-label> {{ question.label }} </ion-label>
             <ion-textarea [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
-          </div>
+          </ion-item>
 
-          <!-- TODO faire en sorte qu'on puisse sélectionner une seule réponse ! -->
-          <div *ngIf='question.type == "selectOne"'>
-            <h2> {{ question.label }} </h2>
-            <ion-select  multiple="false">
-             <ion-option *ngFor="let choice of question.type_data" [value]=choice.index>
+          <ion-item *ngIf='question.type == "selectOne"'>
+            <ion-label> {{ question.label }} </ion-label>
+            <ion-select  multiple="false" [(ngModel)]="question.answer">
+             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
                {{ choice }}
              </ion-option>
            </ion-select>
-          </div>
+         </ion-item>
 
-          <div *ngIf='question.type == "select"'>
-            <h2> {{ question.label }} </h2>
-            <ion-select  multiple="true">
-             <ion-option *ngFor="let choice of question.type_data" [value]=choice.index>
+          <ion-item *ngIf='question.type == "select"'>
+            <ion-label> {{ question.label }} </ion-label>
+            <ion-select  multiple="true" [(ngModel)]="question.answer">
+             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
                {{ choice }}
              </ion-option>
            </ion-select>
-          </div>
+         </ion-item>
 
-          <div *ngIf='question.type == "number"'>
-            <h2> {{ question.label }} </h2> <!-- Rajouter les bornes -->
+          <ion-item *ngIf='question.type == "number"'>
+            <ion-label> {{ question.label }} </ion-label> <!-- Rajouter les bornes -->
              <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
-          </div>
+          </ion-item>
 
-      </ion-slide>
+        </ion-slide>
+
+    </div> <!-- end of loop on surveyData.survey -->
+
     <!-- end -->
     <ion-slide>
       Nous vous remercions pour vos réponses...
@@ -68,6 +73,7 @@
           <button ion-button color="primary" block> Envoyer mes réponses </button>
       </div>
     </ion-slide>
+
 </ion-slides>
 
 </ion-content>
