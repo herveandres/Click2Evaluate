@@ -2,24 +2,32 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MenuPage } from '../menu/menu';
 import { StudentsData } from "../../providers/students-data";
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  account: { email: string, password: string }= {
-    email: '',
+  account: { ldap: string, password: string }= {
+    ldap: '',
     password: ''
   } ;
+  key: string;
   incorrectAuthentification: boolean = false;
   stayConnected: boolean;
 
   constructor(public navCtrl: NavController, public studentsData: StudentsData) {
+    studentsData.isAlreadyConnected().then(res => {
+      if(res){
+        this.navCtrl.setRoot(MenuPage);
+      }
+    });
 
   }
   login(){
-    this.studentsData.connect(this.account.email, this.account.password).then(
+    this.studentsData.connect(this.account.ldap, this.account.password, this.stayConnected).then(
       res => {
           if(res){
           this.navCtrl.setRoot(MenuPage);

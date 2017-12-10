@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 
 import { CourseData } from '../providers/course-data';
 
@@ -16,13 +17,28 @@ export class StudentsData{
   courses: Array<CourseData> = []; // list of courses
 
 
-  constructor(public http: Http){
+  constructor(public http: Http, private storage: Storage){
   }
 
-  connect(ldap: string, password: string){
+  isAlreadyConnected(){
+      return new Promise(resolve => {
+          this.storage.get("ldap").then(res => {
+            this.ldap = res;
+            this.connected = true;
+            resolve (this.ldap != "");
+      })});
+  }
+
+  connect(ldap: string, password: string, stayConnected: boolean){
     this.courses = [];
     console.log("Trying to connect : " + ldap);
     this.ldap = ldap;
+
+    if(stayConnected){
+      this.storage.set("ldap", ldap);
+    }else{
+      this.storage.set("ldap", "");
+    }
     return new Promise(resolve => {
       this.http.get('assets/data/data_students.json')
       .map(res => res.json())
@@ -77,6 +93,7 @@ export class StudentsData{
   // Caution : we have to send the answers.
   disconnect(){
     this.connected = false;
+    this.storage.set("ldap", "");
     this.courses = [];
   }
 
