@@ -21,8 +21,17 @@ export class MenuPage {
 
   }
 
+
+  ionViewWillLeave(){
+    this.studentsData.saveCourses();
+    console.log("Bye bye");
+  }
+
   openSurvey(course: CourseData){
       this.surveyData.getSurvey(course).then(res => {this.navCtrl.push(SurveyPage);});
+  }
+  refresh_data(){
+    this.studentsData.getCoursesOnline();
   }
   disconnect(){
     this.studentsData.disconnect();

@@ -53,46 +53,61 @@ export class StudentsData{
     })
   }
 
+  getCoursesFromLocalStorage(){
+    console.log("Trying to get courses from local storage for " + this.ldap);
+    if(this.connected){
+      let listCourses: Array<string> = [];
+      this.storage.get("courses_data").then(res => {
+      if(res != null){
+        this.courses = res;
+        return true;
+      }
+    });
+    console.log("Nothing in local storage");
+    return false; // nothing is in local storage
+    }
+    console.log("Nobody is connected");
+    return false;
+  }
+
+  getCoursesOnline(){
+    this.courses = [];
+    console.log("Trying to get courses online for " + this.ldap);
+    if(this.connected){
+      if(this.courses.length > 0){
+        return Promise.resolve(this.courses);
+      }else{
+        return new Promise(resolve =>
+          {
+          this.http.get('assets/data/data_students.json')
+          .map(res => res.json())
+          .subscribe(courses =>
+            {
+            let raw:any = courses.filter(h => h.LOGIN_LDAP == this.ldap);
+            //console.log(raw);
+            raw.map(x =>
+              {
+              this.addCourse(x.CODE_MODULE, x.SC_GROUPE, false);
+              });
+            resolve(this.courses);
+            })
+          });
+      }
+    }else{
+      console.log("Nobody is connected.");
+    }
+  }
   getCourses(){
     console.log("Trying to get courses for : " + this.ldap);
     if(this.connected){
       // get courses in local storage
-      let listCourses: Array<string> = [];
-      this.storage.get("listCourses").then(res => {
-        if(res != null){
-          listCourses = res.split(";");
-        }});
-      if(listCourses.length > 0){
-        listCourses.map(name => {
-          this.storage.get(name + "_data").then((res) => {
-              let data: any;
-              data = res;
-              this.courses.push(new CourseData(data, data.group, data.answered));
-              console.log("Got course " + name + " from local storage");
-              console.log(new CourseData(data, data.group, data.answered));
-            });
-        });
-        return Promise.resolve(this.courses);
-      }
-
-      if(this.courses.length > 0){
-        return Promise.resolve(this.courses);
+      if(this.getCoursesFromLocalStorage()){
+        return true;
       }else{
-        return new Promise(resolve => {
-          this.http.get('assets/data/data_students.json')
-          .map(res => res.json())
-          .subscribe(courses => {
-            let raw:any = courses.filter(h => h.LOGIN_LDAP == this.ldap);
-            console.log(raw);
-            raw.map(x => {
-              this.addCourse(x.CODE_MODULE, x.SC_GROUPE, false);
-              });
-            resolve(this.courses);
-          })
-        })
+        this.getCoursesOnline().then(res => {console.log(res);});
+
+        return true;
       }
-    }else{
-      console.log("Nobody is connected.");
     }
   }
 
@@ -102,21 +117,21 @@ export class StudentsData{
       this.http.get('assets/data/data_courses.json')
       .map(res => res.json())
       .subscribe(data => {
-        this.courses.push(new CourseData(data.filter(h => h.Id == code_module)[0], group, answered));
+        let course = new CourseData(data.filter(h => h.Id == code_module)[0], group, answered);
+        this.courses.push(course);
         if(data.filter(h => h.Id == code_module)[0]){
           console.log("Course : " + code_module + " is added");
         }
-        //console.log(data.filter(h => h.Id == code_module)[0]);
         resolve(this.courses);})
       })
   }
+
   saveCourses(){
-    this.courses.map(course => this.saveCourse(course));
+    console.log("Saving courses");
+    this.storage.set("courses_data", this.courses);
+    this.storage.get("courses_data").then(res => {console.log(res);})
   }
 
-  saveCourse(course: CourseData){
-    this.storage.set(course.label + "_data", course);
-  }
 
   // remove everything we already know from the smarphone
   // Caution : we have to send the answers.

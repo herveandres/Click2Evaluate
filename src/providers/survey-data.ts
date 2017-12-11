@@ -57,16 +57,6 @@ export class SurveyData{
     })
   }
 
-  eraseSurvey(course: CourseData){
-    console.log("Erase " + course.label);
-    this.getSurvey(course).then(res =>
-      {
-        this.survey.map((q: Question) => {
-          this.storage.remove(course.id + q.id);
-          console.log("Erase " + course.id + q.id);
-        })
-      });
-  }
 
   // upload the survey
   uploadSurvey(){
