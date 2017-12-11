@@ -19,6 +19,7 @@ export class SurveyData{
   constructor(public http: Http, private storage: Storage){
   }
 
+  // save the survey in the local storage
   save(){
     for(let question of this.survey){
       console.log("saving " + this.course.id + question.id + " : " + question.answer)
@@ -31,7 +32,6 @@ export class SurveyData{
   getSurvey(course:CourseData){
     this.course = course;
     this.survey = [];
-    //this.survey = this.storage.get(this.course.id);
 
     console.log("Trying to generate survey for course : " + course.id + " typeForm : " + course.typeForm);
     return new Promise(resolve => {
@@ -44,8 +44,10 @@ export class SurveyData{
             this.storage.get(this.course.id + qq.id).then(ans =>{
               if(ans != null){
               qq.answer = ans;
-              this.survey.push(qq);
+              console.log(ans);
             }
+            this.survey.push(qq);
+
             });
           });
           console.log("done");
@@ -55,14 +57,21 @@ export class SurveyData{
     })
   }
 
-
-  // save the survey in the local storage
-  saveSurvey(){
-
+  eraseSurvey(course: CourseData){
+    console.log("Erase " + course.label);
+    this.getSurvey(course).then(res =>
+      {
+        this.survey.map((q: Question) => {
+          this.storage.remove(course.id + q.id);
+          console.log("Erase " + course.id + q.id);
+        })
+      });
   }
 
   // upload the survey
   uploadSurvey(){
 
   }
+
+
 }

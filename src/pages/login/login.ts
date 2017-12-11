@@ -33,10 +33,7 @@ export class LoginPage {
           this.navCtrl.setRoot(MenuPage);
         }else{
           this.incorrectAuthentification = true;
-        }
-      }
+        }}
     )
-
   }
-
 }

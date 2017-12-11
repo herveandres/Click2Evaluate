@@ -15,7 +15,6 @@ import { LoginPage } from "../login/login";
 export class MenuPage {
 
   constructor(public navCtrl: NavController, public studentsData: StudentsData, public surveyData:SurveyData){
-
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
