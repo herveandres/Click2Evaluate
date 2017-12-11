@@ -13,7 +13,7 @@ import { SurveyData } from '../providers/survey-data';
 
 @Injectable()
 export class StudentsData{
-  ldap: string = ""; // id like vorname.name@enpc.fr
+  ldap: string; // id like vorname.name@enpc.fr
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
 
@@ -24,11 +24,14 @@ export class StudentsData{
   isAlreadyConnected(){
       return new Promise(resolve => {
           this.storage.get("ldap").then(res => {
+            console.log(res)
             this.ldap = res;
             if(this.ldap != null){
               this.connected = true;
+            }else{
+              this.connected = false;
             }
-            resolve (this.ldap != null);
+            resolve (this.connected);
       })});
   }
 
@@ -40,7 +43,7 @@ export class StudentsData{
     if(stayConnected){
       this.storage.set("ldap", ldap);
     }else{
-      this.storage.set("ldap", "");
+      this.storage.remove("ldap");
     }
     return new Promise(resolve => {
       this.http.get('assets/data/data_students.json')
@@ -56,7 +59,6 @@ export class StudentsData{
   getCoursesFromLocalStorage(){
     console.log("Trying to get courses from local storage for " + this.ldap);
     if(this.connected){
-      let listCourses: Array<string> = [];
       this.storage.get("courses_data").then(res => {
       if(res != null){
         this.courses = res;
@@ -99,6 +101,10 @@ export class StudentsData{
   }
   getCourses(){
     console.log("Trying to get courses for : " + this.ldap);
+    if(this.courses.length > 0){
+      console.log("Courses already loaded");
+      return true;
+    }
     if(this.connected){
       // get courses in local storage
       if(this.getCoursesFromLocalStorage()){
@@ -136,7 +142,8 @@ export class StudentsData{
   // remove everything we already know from the smarphone
   // Caution : we have to send the answers.
   disconnect(){
-    console.log(this.ldap + " is disconnected");
+    this.courses = [];
+    console.log(this.ldap + " is now disconnected");
     this.connected = false;
     this.storage.clear();
   }

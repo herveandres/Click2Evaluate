@@ -1,8 +1,3 @@
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage';
-
-
 // Structure of "course"
 // work with students-data.ts
 
@@ -12,8 +7,8 @@ export class CourseData{
   answered: boolean;
   group: number;        // between 0 and n. 0 if no group
   delegate: string;     // ex. "antoine.dupont@enpc.fr" if antoine Dupont is the delegate for this group
-  commissionsDate: any; // it's impossible to answer after this date
-  availableDate: any;   // it's impossible to answer before this date (ex. a day after the exam)
+  commissionsDate: string; // it's impossible to answer after this date
+  availableDate: string;   // it's impossible to answer before this date (ex. a day after the exam)
   typeForm: string;     // label corresponding to the form used for this course evaluation. Default = "Classique"
 
   constructor(data: any, group: number, answered: boolean){
@@ -23,8 +18,9 @@ export class CourseData{
     this.commissionsDate = data.dateComission;
     this.availableDate = data.dateDisponibilite;
     this.typeForm = data.typeQuestionnaire;
-    this.delegate = data.delegues;
+    this.delegate = data.delegues.split(";")[group];
     this.group = group;
     this.answered = answered;
+    console.log(this);
   }
 }

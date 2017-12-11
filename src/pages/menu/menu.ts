@@ -18,13 +18,22 @@ export class MenuPage {
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
-
   }
-
 
   ionViewWillLeave(){
     this.studentsData.saveCourses();
     console.log("Bye bye");
+  }
+
+  available(course: CourseData){
+      return !this.toLate(course) && !this.toSoon(course);
+  }
+
+  toLate(course: courseData){
+      return new Date().getTime() - new Date(course.commissionsDate).getTime() > 0;
+  }
+  toSoon(course: courseData){
+    return new Date().getTime() - new Date(course.availableDate).getTime() < 0;
   }
 
   openSurvey(course: CourseData){

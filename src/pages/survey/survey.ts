@@ -26,6 +26,8 @@ export class SurveyPage {
   }
 
   send_survey(){
+    this.surveyData.course.answered = true;
+    console.log(this.surveyData.course);
     this.navCtrl.setRoot(MenuPage);
   }
 
