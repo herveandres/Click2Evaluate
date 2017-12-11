@@ -17,7 +17,6 @@ export class StudentsData{
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
 
-
   constructor(public http: Http, public surveyData:SurveyData, private storage: Storage){
   }
 

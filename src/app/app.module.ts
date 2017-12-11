@@ -9,6 +9,7 @@ import { Click2Evaluate } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { MenuPage } from '../pages/menu/menu';
 import { SurveyPage } from './../pages/survey/survey';
+import { CoursesModalPage } from '../pages/coursesModal/coursesModal';
 
 import {HttpModule} from '@angular/http';
 
@@ -17,7 +18,8 @@ import {HttpModule} from '@angular/http';
     Click2Evaluate,
     LoginPage,
     MenuPage,
-    SurveyPage
+    SurveyPage,
+    CoursesModalPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import {HttpModule} from '@angular/http';
     Click2Evaluate,
     LoginPage,
     MenuPage,
-    SurveyPage
+    SurveyPage,
+    CoursesModalPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Click2Evaluate
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)='closeModal()' end>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1> Module {{ id }} : {{ label }} </h1>
+  <ion-list>
+    <ion-item>
+      Répondu ? {{ answered }}
+    </ion-item>
+
+    <ion-item>
+      Votre groupe : {{ group }}
+    </ion-item>
+
+    <ion-item>
+      Le délégué de votre groupe est {{ delegate }}
+    </ion-item>
+
+    <ion-item>
+      <p> Vous pouvez répondre à partir du : {{ availableDate }} </p>
+    </ion-item>
+
+    <ion-item>
+      <p> Date limite pour répondre au questionnaire {{ commissionsDate }} </p>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
