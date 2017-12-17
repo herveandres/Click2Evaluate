@@ -57,7 +57,8 @@ export class MenuPage {
         delegate: course.delegate,
         commissionsDate: course.commissionsDate,
         availableDate: course.availableDate,
-        typeForm: course.typeForm
+        typeForm: course.typeForm,
+        available: this.available(course),
       });
       myModal.present();
   }

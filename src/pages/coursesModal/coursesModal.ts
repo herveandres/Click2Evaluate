@@ -14,12 +14,17 @@ export class CoursesModalPage {
   commissionsDate: string = this.navParams.get("commissionsDate");
   availableDate: string = this.navParams.get("availableDate");
   typeForm: string = this.navParams.get("typeForm");
+  available: boolean= this.navParams.get("available");
 
   constructor(public navParams: NavParams, public viewCtrl: ViewController) {
-
+    console.log("Open modal for course : " + this.id);
   }
 
   closeModal() {
     this.viewCtrl.dismiss();
+  }
+
+  openSurvey(){
+    alert("Coder l'ouverture d'un questionnaire à ce moment là...");
   }
 }

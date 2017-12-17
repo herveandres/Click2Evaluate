@@ -7,8 +7,14 @@
       <button ion-button icon-left (click)='refresh_data()' end>
         <ion-icon name="refresh"></ion-icon>
       </button>
+      <button ion-button icon-left end>
+        <ion-icon name="help-circle"></ion-icon>
+      </button>
       <button ion-button icon-left (click)='disconnect()' end>
         <ion-icon name="log-out"></ion-icon>
+      </button>
+      <button ion-button icon-left end>
+        <ion-icon name="information-circle"></ion-icon>
       </button>
     </ion-buttons>
 
@@ -33,7 +39,7 @@
             * Non répondu :
           -->
         <div *ngIf='available(course)'>
-          <ion-item-sliding *ngIf='!course.answered'>
+          <ion-item-sliding *ngIf='!course.answered' #slidingItem>
             <ion-item (click)='openModal(course)'>
               {{course.label}}
             </ion-item>
@@ -45,11 +51,11 @@
           </ion-item-sliding>
 
           <ion-item-sliding *ngIf='course.answered'>
-            <ion-item>
+            <ion-item (click)='openModal(course)'>
               <ion-icon name="checkmark"></ion-icon> {{course.label}}
             </ion-item>
             <ion-item-options side='right'>
-              Questionnaire déjà envoyé
+              <ion-icon name='checkmark'></ion-icon>
             </ion-item-options>
           </ion-item-sliding>
         </div>
@@ -57,29 +63,29 @@
 
         <!-- courses unavailable (too soon) -->
         <div *ngIf='tooSoon(course)'>
-            <ion-item-sliding *ngIf='!available(course)'>
-              <ion-item>
+            <ion-item-sliding *ngIf='!available(course)' #slidingItem>
+              <ion-item (click)='openModal(course)'>
                 {{ course.label }}
               </ion-item>
               <ion-item-options side='right'>
-                Trop tôt, revenir le :  <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="course.availableDate"></ion-datetime>
+                Trop tôt.
               </ion-item-options>
             </ion-item-sliding>
         </div>
 
         <div *ngIf='tooLate(course)'>
-          <ion-item-sliding *ngIf='!course.answered'>
-            <ion-item>
+          <ion-item-sliding *ngIf='!course.answered' #slidingItem>
+            <ion-item (click)='openModal(course)'>
               {{course.label}}
             </ion-item>
             <ion-item-options side='right'>
-              Trop tard. La date limite était le : 
+              Trop tard. 
               <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="course.commissionsDate"></ion-datetime>
             </ion-item-options>
           </ion-item-sliding>
 
-          <ion-item-sliding *ngIf='course.answered'>
-            <ion-item>
+          <ion-item-sliding *ngIf='course.answered' #slidingItem>
+            <ion-item (click)='openModal(course)'>
               <ion-icon name="checkmark"></ion-icon> {{course.label}}
             </ion-item>
             <ion-item-options side='right'>

@@ -37,4 +37,9 @@
 
   </ion-list>
 
+  <div *ngIf="available">
+  <div *ngIf="!answered" padding>
+      <button ion-button color="primary" block (click)="openSurvey()"> Évaluer </button>
+  </div></div>
+
 </ion-content>
