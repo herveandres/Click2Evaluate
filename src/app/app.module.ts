@@ -11,6 +11,8 @@ import { MenuPage } from '../pages/menu/menu';
 import { SurveyPage } from './../pages/survey/survey';
 import { CoursesModalPage } from '../pages/coursesModal/coursesModal';
 
+import { Autosize } from '../components/autosize/autosize';
+
 import {HttpModule} from '@angular/http';
 
 @NgModule({

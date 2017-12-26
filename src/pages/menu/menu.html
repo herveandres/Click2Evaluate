@@ -23,7 +23,15 @@
 
 <ion-content padding>
   <div *ngIf="studentsData.connected">
-  <h2> Quels modules souhaitez-vous évaluer ? </h2>
+    <ion-card text-center>
+      <ion-card-header>
+        Liste des modules
+      </ion-card-header>
+      <ion-card-content>
+        Voici la liste des modules à évaluer. Faites glisser le module que vous souhaitez évaluer.
+      </ion-card-content>
+    </ion-card>
+
   <ion-list>
       <div *ngFor='let course of studentsData.courses'>
 

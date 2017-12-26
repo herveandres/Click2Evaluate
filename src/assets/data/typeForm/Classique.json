@@ -1,0 +1,212 @@
+[
+  {
+    "id": 0,
+    "type": "selectOne",
+    "type_data":"Oui, sans changements;Oui, avec des changements mineurs;Oui, avec des changements majeurs;Non",
+    "label":"Pensez-vous que ce cours doit être maintenu ?",
+    "resume":"Maintien",
+    "obligatory": true,
+    "isSub":false,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue": ""
+  },
+  {
+    "id":1,
+    "type": "text",
+    "type_data":"",
+    "label":"Indiquez les changements mineurs souhaités",
+    "resume":"Changements mineurs",
+    "obligatory": true,
+    "isSub":true,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":1
+  },
+  {
+    "id": 2,
+    "type": "text",
+    "type_data":"",
+    "label": "Indiquez les changements majeurs souhaités",
+    "resume":"Changements majeurs",
+    "obligatory": true,
+    "isSub":true,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":2
+   },
+  {
+    "id": 3,
+    "type": "text",
+    "type_data":"",
+    "label": "Indiquez pourquoi ce module ne devrait pas être maintenu",
+    "resume":"Non maintien",
+    "obligatory": true,
+    "isSub":true,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":3
+  },
+  {
+    "id":4,
+    "type":"selectOne",
+    "label":"Les objectifs du module sont-ils atteints pour vous ?",
+    "resume":"Objectifs",
+    "type_data":"Tout à fait;Plutôt oui;Plutôt non;Pas du tout;Autre réponse (précisez ci-dessous)",
+    "obligatory": false,
+    "isSub":false,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":0
+  },
+  {
+    "id":5,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Précisez votre réponse sur l'atteinte des objectifs",
+    "resume":"Atteinte des objectifs",
+    "parentsQuestion": "",
+    "isSub":true,
+    "parentsQuestionId": 4,
+    "parentsQuestionValue":4
+  },
+  {
+    "id":6,
+    "type":"select",
+    "label":"Souhaitez-vous en dire plus sur...",
+    "resume":"Dites-en plus !",
+    "type_data":"les contenus (intérêt scientifique, utilité pour vos compétences...);les enseignants;les activités pédagogiques encadrées (amphi, TD, TD, TPA, suivi de projets...);les activités en autonomie (travaux personels ou de groupes, préparation à la classe inversée...);les supports de cours;les ressources numériques;les séances que vous avez préférées;les séances qui vous ont le moins intéressés;les modalités de validation et d'évaluation des acquis;Autre",
+    "obligatory": false,
+    "isSub":false,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":0
+  },
+  {
+    "id":7,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les contenus",
+    "resume":"Contenus",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":0
+  },
+  {
+    "id":8,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les enseignants",
+    "resume":"Enseignants",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":1
+  },
+  {
+    "id":9,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les activités pédagogiques encadrées",
+    "resume":"Activités encadrées",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":2
+  },
+  {
+    "id":10,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les activités en autonomie",
+    "resume":"Activités autonomes",
+    "parentsQuestion": "",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":3
+  },
+  {
+    "id":11,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les supports de cours",
+    "resume":"Supports",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":4
+  },
+  {
+    "id":12,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Votre avis sur les ressources numériques",
+    "resume":"Ressources numériques",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":5
+  },
+  {
+    "id":13,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Les séances que vous avez préférées",
+    "resume":"Séances préférées",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":6
+  },
+  {
+    "id":14,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Les séances qui vous ont le moins intéressés",
+    "resume":"Séances moins intéressantes",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":7
+  },
+  {
+    "id":15,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Les modalités de validation et d'évaluation des acquis",
+    "resume":"Validation",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":8
+  },
+  {
+    "id":16,
+    "type":"text",
+    "type_data":"",
+    "obligatory": true,
+    "label":"Une autre remarque ?",
+    "isSub":true,
+    "parentsQuestionId": 6,
+    "parentsQuestionValue":9
+  },
+  {
+    "id":17,
+    "type":"number",
+    "type_data":"0,10",
+    "obligatory": false,
+    "label":"Combien d'heures (hors classe), en moyenne, consacriez-vous chaque semaine à ce module ?",
+    "resume":"Temps consacré",
+    "isSub":false,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":0
+  },
+  {
+    "id":18,
+    "type":"selectOne",
+    "type_data":"Tout à fait;Plutôt oui;Plutôt non; Pas du tout",
+    "label": "L'équilibre entre le travail en séance et hors séance est-il adéquat ?",
+    "resume":"Equilibre",
+    "obligatory": false,
+    "isSub":false,
+    "parentsQuestionId": 0,
+    "parentsQuestionValue":0
+  }
+]
