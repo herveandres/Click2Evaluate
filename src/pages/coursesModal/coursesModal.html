@@ -13,6 +13,22 @@
 </ion-header>
 
 <ion-content padding>
+
+    <ion-card text-center>
+      <ion-card-header>
+        Module : <br/>
+        {{ label }}
+      </ion-card-header>
+      <ion-card-content>
+        Questionnaire complété : {{ answered }} <br/> <br/>
+        Votre groupe : n°{{ group }} <br/> <br/>
+        Délégué du groupe : <br/> {{ delegate }} <br/> <br/>
+        Ouverture du questionnaire : <br/> {{ availableDate }} <br/> <br/>
+        Fermeture du questionnaire : <br/> {{ commissionsDate }}
+      </ion-card-content>
+    </ion-card>
+    
+  <!---
   <h1> Module {{ id }} : {{ label }} </h1>
   <ion-list>
     <ion-item>
@@ -36,6 +52,7 @@
     </ion-item>
 
   </ion-list>
+-->
 
   <div *ngIf="available">
   <div *ngIf="!answered" padding>

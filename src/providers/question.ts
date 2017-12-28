@@ -25,8 +25,9 @@ export class Question{
 
    constructor(q: any){
      this.id = q.id;
-     this.resume = q.resume;
      this.label = q.label;
+     this.title = q.title;
+     this.resume = q.resume;
      this.obligatory = q.obligatory;
      this.answer = "";
      this.type = q.type;

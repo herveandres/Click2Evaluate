@@ -1,22 +1,25 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Questionnaire : {{ surveyData.course.label }}
+      Questionnaire <!-- : {{ surveyData.course.label }} -->
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-   <ion-slides (ionSlideDrag)="display()"> 
+   <ion-slides (ionSlideDrag)="display()">
     <!-- begin -->
     <ion-slide>
-      
+
       <ion-card text-center>
         <ion-card-header>
           Module choisi
         </ion-card-header>
         <ion-card-content>
-          Vous allez évaluer le module : {{ surveyData.course.label }}.
+          Vous allez évaluer le module : <br/>
+          {{ surveyData.course.label }}. <br/> <br/>
+          Pour parcourir le questionnaire, il suffit de faire glisser la
+          question vers la gauche lorsque vous y avez répondu.
         </ion-card-content>
       </ion-card>
 
@@ -38,10 +41,10 @@
 
           <ion-card>
             <ion-card-header>
-              Question
+              {{ question.title }}
             </ion-card-header>
             <ion-card-content>
-              {{ question.resume }}
+              {{ question.label }}
             </ion-card-content>
           </ion-card>
 
@@ -55,7 +58,7 @@
           </ion-item>
 
           <ion-item *ngIf='question.type == "text"'>
-            <ion-label> {{ question.resume }} </ion-label>
+            <!--<ion-label> Coucou </ion-label>-->
             <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
           </ion-item>
 
@@ -84,13 +87,21 @@
 
         </ion-slide>
 
-    </div> 
+    </div>
     <!-- end of loop on surveyData.survey -->
 
     <!-- end -->
     <ion-slide>
-      Nous vous remercions pour vos réponses...
-      Une dernière remarque ?
+      <ion-card>
+        <ion-card-header>
+          Fin du questionnaire !
+        </ion-card-header>
+        <ion-card-content>
+          Ce questionnaire est maintenant terminé. Nous vous remercions pour vos réponses ! <br/>
+          Avez-vous une dernière remarque ?
+        </ion-card-content>
+      </ion-card>
+
       <ion-item>
          <ion-textarea autosize></ion-textarea>
       </ion-item>
