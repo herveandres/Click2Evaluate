@@ -11,8 +11,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { SurveyPage } from './../pages/survey/survey';
 import { CoursesModalPage } from '../pages/coursesModal/coursesModal';
 
-import { Autosize } from '../components/autosize/autosize';
-
+import { Autosize } from '../directives/autosize/autosize';
 import {HttpModule} from '@angular/http';
 
 @NgModule({
@@ -21,7 +20,8 @@ import {HttpModule} from '@angular/http';
     LoginPage,
     MenuPage,
     SurveyPage,
-    CoursesModalPage
+    CoursesModalPage,
+    Autosize
   ],
   imports: [
     BrowserModule,

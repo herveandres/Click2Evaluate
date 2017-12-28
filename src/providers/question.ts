@@ -7,6 +7,7 @@ export class SubQuestion{ // to ask the question iff the actual answer is...
 
 export class Question{
   id:string;
+  resume:string;        //Type of question
   label:string;         // ex. Pensez-vous que ce cours doit être maintenu ?
   obligatory:boolean;   // If we have to answer to this question ("true" or "false")
   answer: any;        // even if the answer is a number, we convert it to string
@@ -24,6 +25,7 @@ export class Question{
 
    constructor(q: any){
      this.id = q.id;
+     this.resume = q.resume;
      this.label = q.label;
      this.obligatory = q.obligatory;
      this.answer = "";

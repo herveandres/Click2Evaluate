@@ -7,10 +7,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-slides (ionSlideDrag)="display()">
+   <ion-slides (ionSlideDrag)="display()"> 
     <!-- begin -->
     <ion-slide>
-
+      
       <ion-card text-center>
         <ion-card-header>
           Module choisi
@@ -30,7 +30,7 @@
           <div *ngIf='question.obligatory' class="center">
             <!--<ion-icon  name='alert'></ion-icon>-->
             <ion-card text-center>
-              <ion-card-header color="assertive">
+              <ion-card-header class="mandatory-question">
                 Question obligatoire
               </ion-card-header>
             </ion-card>
@@ -41,13 +41,13 @@
               Question
             </ion-card-header>
             <ion-card-content>
-              {{ question.label }}
+              {{ question.resume }}
             </ion-card-content>
           </ion-card>
 
           <!-- On affiche la question suivant le type de celle-ci -->
           <ion-item *ngIf='question.type == "inline"'>
-            <ion-label> {{ question.label }} </ion-label>
+            <ion-label> {{ question.resume }} </ion-label>
             <ion-input type="text" [(ngModel)]="question.answer"
                 placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">
               </ion-input>
@@ -84,13 +84,16 @@
 
         </ion-slide>
 
-    </div> <!-- end of loop on surveyData.survey -->
+    </div> 
+    <!-- end of loop on surveyData.survey -->
 
     <!-- end -->
     <ion-slide>
       Nous vous remercions pour vos réponses...
       Une dernière remarque ?
-      <ion-textarea Autosize type="text"> </ion-textarea>
+      <ion-item>
+         <ion-textarea autosize></ion-textarea>
+      </ion-item>
       <div padding>
           <button ion-button color="primary" (click)="send_survey()" block> Envoyer mes réponses </button>
       </div>
