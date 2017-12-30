@@ -7,6 +7,7 @@ export class SubQuestion{ // to ask the question iff the actual answer is...
 
 export class Question{
   id:string;
+  title:string;
   resume:string;        //Type of question
   label:string;         // ex. Pensez-vous que ce cours doit être maintenu ?
   obligatory:boolean;   // If we have to answer to this question ("true" or "false")

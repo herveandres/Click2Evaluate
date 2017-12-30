@@ -56,7 +56,9 @@ export class SurveyData{
       })
     })
   }
-
+  get_survey(){
+    return this.survey;
+  }
 
   // upload the survey
   uploadSurvey(){

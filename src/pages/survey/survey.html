@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-   <ion-slides (ionSlideDrag)="display()">
+   <ion-slides (ionSlideDrag)=check_possible()>
     <!-- begin -->
     <ion-slide>
 
@@ -84,8 +84,8 @@
             <ion-label> {{ question.resume }} </ion-label> <!-- Rajouter les bornes -->
              <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
           </ion-item>
-
-        </ion-slide>
+          <div (ionSlideDrag)='check_possible(question)'></div>
+        </ion-slide> 
 
     </div>
     <!-- end of loop on surveyData.survey -->
