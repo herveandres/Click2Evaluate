@@ -39,23 +39,23 @@ export class SurveyData{
       .map(res => res.json())
       .subscribe(s =>
         {
-          s.map(q => {
-            let qq: Question = new Question(q);
-            this.storage.get(this.course.id + qq.id).then(ans =>{
-              if(ans != null){
-              qq.answer = ans;
-              console.log(ans);
-            }
-            this.survey.push(qq);
-
-            });
-          });
-          console.log("done");
-          console.log(this.survey);
-          resolve(this.survey);
+            Promise.all(s.map(q => {
+              return new Promise(resolve => {
+                let qq: Question = new Question(q);
+                this.storage.get(this.course.id + qq.id)
+                .then((ans) => {
+                  if(ans != null){
+                    qq.answer = ans;
+                    console.log(ans);
+                  }
+                  this.survey.push(qq);
+                  resolve(qq);
+                })
+              });
+            })).then(values => {resolve(this.survey);});
+        });
       })
-    })
-  }
+}
   get_survey(){
     return this.survey;
   }

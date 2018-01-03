@@ -15,13 +15,15 @@ import { AlertController } from 'ionic-angular';
 export class SurveyPage {
   mandatory_questions:Array<Question> = [];
   label_current_question: string;
+
   @ViewChild(Slides) slides: Slides;
-  
-  constructor(public navCtrl: NavController, public surveyData:SurveyData,private alertCtrl: AlertController) {
+
+  constructor(public navCtrl: NavController, public surveyData:SurveyData, private alertCtrl: AlertController) {
     console.log("Génération");
-    console.log(surveyData.survey);
-    console.log("Length " + surveyData.survey.length);
-    for(let question of surveyData.survey){
+    console.log(this.surveyData.survey);
+    console.log("Length " + this.surveyData.survey.length);
+
+    for(let question of this.surveyData.survey){
       console.log("Boucle");
       if(this.displayable(question)){
           this.mandatory_questions.push(question);
@@ -37,6 +39,7 @@ export class SurveyPage {
     this.surveyData.save();
     console.log("bye");
   }
+
   check_possible(){
     if(this.mandatory_questions[this.slides.getActiveIndex()].obligatory){
         if(this.mandatory_questions[this.slides.getActiveIndex()].answer == ""){
@@ -49,6 +52,7 @@ export class SurveyPage {
         }
     }
   }
+
   missingAnswer() {
     let alert = this.alertCtrl.create({
       title: 'La question est obligatoire',
@@ -57,11 +61,13 @@ export class SurveyPage {
     });
     alert.present();
   }
+
   send_survey(){
     this.surveyData.course.answered = true;
     console.log(this.surveyData.course);
     this.navCtrl.setRoot(MenuPage);
   }
+
   displayable(question:Question){
     if(!question.isSub){
       return true;
