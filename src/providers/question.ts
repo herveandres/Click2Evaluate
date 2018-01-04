@@ -6,14 +6,15 @@ export class SubQuestion{ // to ask the question iff the actual answer is...
 }
 
 export class Question{
-  id:string;
+  id:number;
+  position: number;
   title:string;
-  resume:string;        //Type of question
+  summary:string;
   label:string;         // ex. Pensez-vous que ce cours doit être maintenu ?
   obligatory:boolean;   // If we have to answer to this question ("true" or "false")
   answer: any;        // even if the answer is a number, we convert it to string
 
-  type:string;          // "text" for long answer
+  type_question:string;          // "text" for long answer
                         // "inline" for short answer
                         // "number; 0; 10" for int entry between (included) 0 and 10
   type_data: Array<any>;// for "text" and "inline": []
@@ -21,20 +22,21 @@ export class Question{
                         // for "select" Array<string> = [choice1, choice2, ..., choiceN]
 
   isSub: boolean;         // "true" iff the question is a subquestion
-  parentsQuestionId:number; // id of the parents question. Make sense iff isSub
+  parentsQuestionPosition:number; // id of the parents question. Make sense iff isSub
   parentsQuestionValue:number; // the conditionnal answer to display that question
 
    constructor(q: any){
      this.id = q.id;
+     this.position = q.position;
+     this.summary = q.summary;
      this.label = q.label;
-     this.title = q.title;
-     this.resume = q.resume;
      this.obligatory = q.obligatory;
-     this.answer = "";
-     this.type = q.type;
+     this.title = q.title;
+     this.type_question = q.type_question;
      this.type_data = q.type_data.split(";");
      this.isSub = q.isSub;
-     this.parentsQuestionValue = q.parentsQuestionValue;
-     this.parentsQuestionId = q.parentsQuestionId;
+     this.parentsQuestionValue = q.parentsQuestionsValue;
+     this.parentsQuestionPosition = q.parentsQuestionPosition;
+     this.answer = "";
    }
 }

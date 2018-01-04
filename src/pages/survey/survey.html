@@ -7,17 +7,16 @@
 </ion-header>
 
 <ion-content padding>
-   <ion-slides (ionSlideDrag)=check_possible()>
+   <!-- <ion-slides (ionSlideDrag)=check_possible()>-->
+   <ion-slides>
     <!-- begin -->
     <ion-slide>
 
       <ion-card text-center>
         <ion-card-header>
-          Module choisi
+          Évaluation du module : {{ surveyData.course.label }}
         </ion-card-header>
         <ion-card-content>
-          Vous allez évaluer le module : <br/>
-          {{ surveyData.course.label }}. <br/> <br/>
           Pour parcourir le questionnaire, il suffit de faire glisser la
           question vers la gauche lorsque vous y avez répondu.
         </ion-card-content>
@@ -49,21 +48,21 @@
           </ion-card>
 
           <!-- On affiche la question suivant le type de celle-ci -->
-          <ion-item *ngIf='question.type == "inline"'>
-            <ion-label> {{ question.resume }} </ion-label>
+          <ion-item *ngIf='question.type_question == "inline"'>
+            <ion-label> {{ question.summary }} </ion-label>
             <ion-input type="text" [(ngModel)]="question.answer"
                 placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">
               </ion-input>
 
           </ion-item>
 
-          <ion-item *ngIf='question.type == "text"'>
-            <!--<ion-label> Coucou </ion-label>-->
+          <ion-item *ngIf='question.type_question == "text"'>
+            <ion-label> {{ question.summary }}</ion-label>
             <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
           </ion-item>
 
-          <ion-item *ngIf='question.type == "selectOne"'>
-            <ion-label> {{ question.resume }} </ion-label>
+          <ion-item *ngIf='question.type_question == "selectOne"'>
+            <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="false" [(ngModel)]="question.answer">
              <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
                {{ choice }}
@@ -71,8 +70,8 @@
            </ion-select>
          </ion-item>
 
-          <ion-item *ngIf='question.type == "select"'>
-            <ion-label> {{ question.resume }} </ion-label>
+          <ion-item *ngIf='question.type_question == "select"'>
+            <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="true" [(ngModel)]="question.answer">
              <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
                {{ choice }}
@@ -80,12 +79,13 @@
            </ion-select>
          </ion-item>
 
-          <ion-item *ngIf='question.type == "number"'>
-            <ion-label> {{ question.resume }} </ion-label> <!-- Rajouter les bornes -->
+          <ion-item *ngIf='question.type_question == "number"'>
+            <ion-label> {{ question.summary }} </ion-label> <!-- Rajouter les bornes -->
              <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
           </ion-item>
-          <div (ionSlideDrag)='check_possible(question)'></div>
-        </ion-slide> 
+
+          <!--<div (ionSlideDrag)='check_possible(question)'></div>-->
+        </ion-slide>
 
     </div>
     <!-- end of loop on surveyData.survey -->
@@ -97,14 +97,10 @@
           Fin du questionnaire !
         </ion-card-header>
         <ion-card-content>
-          Ce questionnaire est maintenant terminé. Nous vous remercions pour vos réponses ! <br/>
-          Avez-vous une dernière remarque ?
+          Ce questionnaire est maintenant terminé. Nous vous remercions pour vos réponses !
         </ion-card-content>
       </ion-card>
 
-      <ion-item>
-         <ion-textarea autosize></ion-textarea>
-      </ion-item>
       <div padding>
           <button ion-button color="primary" (click)="send_survey()" block> Envoyer mes réponses </button>
       </div>

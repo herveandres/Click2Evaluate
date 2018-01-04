@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 import { StudentsData } from "../../providers/students-data";
 import { SurveyData } from "../../providers/survey-data";
@@ -17,7 +18,8 @@ import { CoursesModalPage } from "../coursesModal/coursesModal";
 export class MenuPage {
 
   constructor(public navCtrl: NavController, public studentsData: StudentsData,
-    public surveyData:SurveyData, public modalCtrl: ModalController){
+    public surveyData:SurveyData, public modalCtrl: ModalController,
+    private alertCtrl: AlertController){
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
@@ -41,7 +43,14 @@ export class MenuPage {
   }
 
   openSurvey(course: CourseData){
-      this.surveyData.getSurvey(course).then(res => {this.navCtrl.push(SurveyPage);});
+      this.surveyData.getSurvey(course).then(res => {this.navCtrl.push(SurveyPage);}, err => {
+        let alert = this.alertCtrl.create({
+          title: "Pas d'internet",
+          subTitle: "Nous n'arrivons pas à accéder à notre serveur pour télécharger le questionnaire. veuillez réessayer ultérieurement.",
+          buttons: ['Ok']
+        });
+      alert.present();
+      });
   }
 
   refresh_data(){

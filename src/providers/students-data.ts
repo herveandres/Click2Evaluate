@@ -8,9 +8,9 @@ import { API } from '../providers/api';
 import { CourseData } from '../providers/course-data';
 import { SurveyData } from '../providers/survey-data';
 
-// Connect somebody (verify if ldap and password corresponding)
+// Connect somebody (verify if ldap and password are corresponding)
 // and download the list of his courses
-// If stayConnected save the data in the local storage (TODO)
+// If stayConnected save the data in the local storage
 // Now it works with .json files in assets/data/
 
 @Injectable()
@@ -46,7 +46,6 @@ export class StudentsData{
       this.storage.remove("ldap");
     }
 
-
     if(this.api.noServer){
       return this.connect_noServer(ldap, password, stayConnected)
     }else{
@@ -56,15 +55,27 @@ export class StudentsData{
         .map(res => res.json())
         .subscribe(data => {
           this.connected = (data.ldap == ldap);
+          if(this.connected){
+            this.ldap = ldap;
+          }
           resolve(this.connected);
         }, err => {
-          let alert = this.alertCtrl.create({
-            titre: 'Aucun accès',
-            subTitle: "L'application n'arrive pas à accéder au serveur d'authentification, réessayez ultérieurement",
-            buttons: ['Ok']
-          });
           console.log(err);
-          alert.present();
+          if(err.status == 500){
+            let alert = this.alertCtrl.create({
+              title: 'Identifiant incorrect',
+              subTitle: "L'identifiant est incorrect.",
+              buttons: ['Ok']
+            });
+            alert.present();
+          }else{
+            let alert = this.alertCtrl.create({
+              title: 'Aucun accès',
+              subTitle: "L'application n'arrive pas à accéder au serveur d'authentification, réessayez ultérieurement.",
+              buttons: ['Ok']
+            });
+            alert.present();
+          }
         })
       })
     }
@@ -102,8 +113,77 @@ export class StudentsData{
   }
 
   getCoursesOnline(){
+    console.log("Trying to get courses for : " + this.ldap);
+    if(this.connected){
+      return new Promise(resolve =>
+        {
+          let url: string;
+          if(this.api.noServer){
+            url = 'assets/data/marc-antoine.json';
+          }else{
+            url = this.api.url + "courses/" + this.ldap + "/";
+          }
+          console.log("Request : "+ url);
+          this.http.get(url)
+          .map(res => res.json())
+          .subscribe(courses =>
+            {
+              this.courses = [];
+              courses.map(x =>
+                {
+                  let c = new CourseData(x);
+                  this.courses.push(c);
+                });
+                resolve(this.courses);
+            }, err => {
+              let alert = this.alertCtrl.create({
+                title: "Pas d'internet",
+                subTitle: "L'application n'arrive pas à accéder au serveur, réessayez ultérieurement.",
+                buttons: ['Ok']
+              });
+              alert.present();
+            })
+        })
+    }
+  }
+
+  getCourses(){
+    console.log("Trying to get courses for : " + this.ldap);
+    if(this.courses.length > 0){
+      console.log("Courses already loaded");
+      return true;
+    }
+    if(this.connected){
+      // get courses in local storage
+      if(this.getCoursesFromLocalStorage()){
+        return true;
+      }else{
+        this.getCoursesOnline().then(res => {console.log(res);});
+
+        return true;
+      }
+    }
+  }
+
+  saveCourses(){
+    console.log("Saving courses");
+    this.storage.set("courses_data", this.courses);
+    this.storage.get("courses_data").then(res => {console.log(res);})
+  }
+
+
+  // remove everything we already know from the smarphone
+  // Caution : we have to send the answers.
+  disconnect(){
     this.courses = [];
-    console.log("Trying to get courses online for " + this.ldap);
+    console.log(this.ldap + " is now disconnected");
+    this.connected = false;
+    this.storage.clear();
+  }
+
+  /*getCoursesOnline_noServer(){
+    this.courses = [];
+    console.log("Trying to get courses (online) for " + this.ldap);
     if(this.connected){
       if(this.courses.length > 0){
         return Promise.resolve(this.courses);
@@ -128,25 +208,9 @@ export class StudentsData{
       console.log("Nobody is connected.");
     }
   }
-  getCourses(){
-    console.log("Trying to get courses for : " + this.ldap);
-    if(this.courses.length > 0){
-      console.log("Courses already loaded");
-      return true;
-    }
-    if(this.connected){
-      // get courses in local storage
-      if(this.getCoursesFromLocalStorage()){
-        return true;
-      }else{
-        this.getCoursesOnline().then(res => {console.log(res);});
+  */
 
-        return true;
-      }
-    }
-  }
-
-  addCourse(code_module: string, group: number, answered: boolean){
+  /*addCourse(code_module: string, group: number, answered: boolean){
     console.log("Trying to add course with id : " + code_module);
     return new Promise(resolve => {
       this.http.get('assets/data/data_courses.json')
@@ -159,22 +223,8 @@ export class StudentsData{
         }
         resolve(this.courses);})
       })
-  }
-
-  saveCourses(){
-    console.log("Saving courses");
-    this.storage.set("courses_data", this.courses);
-    this.storage.get("courses_data").then(res => {console.log(res);})
-  }
+  }*/
 
 
-  // remove everything we already know from the smarphone
-  // Caution : we have to send the answers.
-  disconnect(){
-    this.courses = [];
-    console.log(this.ldap + " is now disconnected");
-    this.connected = false;
-    this.storage.clear();
-  }
 
 }

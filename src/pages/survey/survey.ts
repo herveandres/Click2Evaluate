@@ -19,7 +19,7 @@ export class SurveyPage {
   @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController, public surveyData:SurveyData, private alertCtrl: AlertController) {
-    console.log("Génération");
+    /*console.log("Génération");
     console.log(this.surveyData.survey);
     console.log("Length " + this.surveyData.survey.length);
 
@@ -29,7 +29,7 @@ export class SurveyPage {
           this.mandatory_questions.push(question);
       }
     }
-    console.log(this.mandatory_questions);
+    console.log(this.mandatory_questions);*/
   }
   display(){
   //this.save_answers();
@@ -37,34 +37,34 @@ export class SurveyPage {
 
   ionViewWillLeave(){
     this.surveyData.save();
-    console.log("bye");
+    console.log("Quit survey");
   }
 
   check_possible(){
-    if(this.mandatory_questions[this.slides.getActiveIndex()].obligatory){
-        if(this.mandatory_questions[this.slides.getActiveIndex()].answer == ""){
-            this.slides.lockSwipeToNext(true);
-            this.missingAnswer();
-
-        }
-        else{
-          this.slides.lockSwipeToNext(false);
-        }
+    if(this.slides.getActiveIndex() > 1){
+      if(this.surveyData.survey[this.slides.getActiveIndex()].obligatory){
+          if(this.mandatory_questions[this.slides.getActiveIndex()].answer == ""){
+              this.slides.lockSwipeToNext(true);
+              this.missingAnswer();
+          }
+          else{
+            this.slides.lockSwipeToNext(false);
+          }
+      }
     }
   }
 
-  missingAnswer() {
+  /*missingAnswer() {
     let alert = this.alertCtrl.create({
       title: 'La question est obligatoire',
       subTitle: 'Merci d\' y répondre afin de pouvoir poursuivre le questionnaire',
       buttons: ['Ok']
     });
-    alert.present();
-  }
+//    alert.present();
+  }*/
 
   send_survey(){
-    this.surveyData.course.answered = true;
-    console.log(this.surveyData.course);
+    this.surveyData.uploadSurvey();
     this.navCtrl.setRoot(MenuPage);
   }
 
@@ -72,7 +72,7 @@ export class SurveyPage {
     if(!question.isSub){
       return true;
     }else{
-      let answer: any = this.surveyData.survey[question.parentsQuestionId].answer;
+      let answer: any = this.surveyData.survey[question.parentsQuestionPosition].answer;
       if(typeof answer === "number"){
         return answer == question.parentsQuestionValue;
       }else{
