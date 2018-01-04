@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular';
 
+import { API } from '../providers/api';
 import { CourseData } from '../providers/course-data';
 import { SurveyData } from '../providers/survey-data';
 
@@ -17,7 +19,8 @@ export class StudentsData{
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
 
-  constructor(public http: Http, public surveyData:SurveyData, private storage: Storage){
+  constructor(public http: Http, public surveyData:SurveyData,
+    private storage: Storage, public api: API, private alertCtrl:AlertController){
   }
 
   isAlreadyConnected(){
@@ -31,19 +34,46 @@ export class StudentsData{
               this.connected = false;
             }
             resolve (this.connected);
-      })});
+      })
+    });
   }
 
   connect(ldap: string, password: string, stayConnected: boolean){
-    this.courses = [];
-    console.log("Trying to connect : " + ldap);
-    this.ldap = ldap;
 
     if(stayConnected){
       this.storage.set("ldap", ldap);
     }else{
       this.storage.remove("ldap");
     }
+
+
+    if(this.api.noServer){
+      return this.connect_noServer(ldap, password, stayConnected)
+    }else{
+      console.log("Executing request : " + this.api.url + "student/" + ldap + "/");
+      return new Promise((resolve, reject) => {
+        this.http.get(this.api.url + "student/" + ldap + "/")
+        .map(res => res.json())
+        .subscribe(data => {
+          this.connected = (data.ldap == ldap);
+          resolve(this.connected);
+        }, err => {
+          let alert = this.alertCtrl.create({
+            titre: 'Aucun accès',
+            subTitle: "L'application n'arrive pas à accéder au serveur d'authentification, réessayez ultérieurement",
+            buttons: ['Ok']
+          });
+          console.log(err);
+          alert.present();
+        })
+      })
+    }
+  }
+
+  connect_noServer(ldap: string, password: string, stayConnected: boolean){
+    this.courses = [];
+    console.log("Trying to connect : " + ldap);
+    this.ldap = ldap;
     return new Promise(resolve => {
       this.http.get('assets/data/data_students.json')
       .map(res => res.json())

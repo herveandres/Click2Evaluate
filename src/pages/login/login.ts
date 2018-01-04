@@ -31,12 +31,13 @@ export class LoginPage {
   }
   login(){
     this.studentsData.connect(this.account.ldap, this.account.password, this.stayConnected).then(
-      res => {
-          if(res){
+        res => {
+            if(res){
           this.navCtrl.setRoot(MenuPage);
+
         }else{
-          this.incorrectAuthentification = true;
-        }}
-    )
+              this.incorrectAuthentification = true;
+          }}
+      )
   }
 }

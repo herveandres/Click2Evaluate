@@ -6,11 +6,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { StudentsData } from '../providers/students-data';
 import { SurveyData } from '../providers/survey-data';
+import { API } from '../providers/api';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [StudentsData, SurveyData]
+  providers: [StudentsData, SurveyData,API]
 })
+
 export class Click2Evaluate {
   rootPage:any = LoginPage;
 
