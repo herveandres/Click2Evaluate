@@ -7,8 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-   <!-- <ion-slides (ionSlideDrag)=check_possible()>-->
-   <ion-slides>
+   <ion-slides (ionSlideNextStart)="check_possible()">
     <!-- begin -->
     <ion-slide>
 
@@ -51,20 +50,20 @@
           <ion-item *ngIf='question.type_question == "inline"'>
             <ion-label> {{ question.summary }} </ion-label>
             <ion-input type="text" [(ngModel)]="question.answer"
-                placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">
+                placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">
               </ion-input>
 
           </ion-item>
 
           <ion-item *ngIf='question.type_question == "text"'>
             <ion-label> {{ question.summary }}</ion-label>
-            <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}">  </ion-textarea>
+            <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">  </ion-textarea>
           </ion-item>
 
           <ion-item *ngIf='question.type_question == "selectOne"'>
             <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="false" [(ngModel)]="question.answer">
-             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
+             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
                {{ choice }}
              </ion-option>
            </ion-select>
@@ -73,7 +72,7 @@
           <ion-item *ngIf='question.type_question == "select"'>
             <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="true" [(ngModel)]="question.answer">
-             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index>
+             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
                {{ choice }}
              </ion-option>
            </ion-select>
@@ -81,7 +80,7 @@
 
           <ion-item *ngIf='question.type_question == "number"'>
             <ion-label> {{ question.summary }} </ion-label> <!-- Rajouter les bornes -->
-             <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer"></ion-input>
+             <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer" (input)="swipe_unlock()"></ion-input>
           </ion-item>
 
           <!--<div (ionSlideDrag)='check_possible(question)'></div>-->

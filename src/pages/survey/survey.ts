@@ -13,23 +13,23 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'survey.html'
 })
 export class SurveyPage {
-  mandatory_questions:Array<Question> = [];
+  base_questions:Array<Question> = [];
+  additional_questions: {[id:number]:Array<Question>;}={};
   label_current_question: string;
-
+  lock_swipe: boolean;
   @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController, public surveyData:SurveyData, private alertCtrl: AlertController) {
-    /*console.log("Génération");
-    console.log(this.surveyData.survey);
-    console.log("Length " + this.surveyData.survey.length);
-
     for(let question of this.surveyData.survey){
       console.log("Boucle");
       if(this.displayable(question)){
-          this.mandatory_questions.push(question);
+          this.base_questions.push(question);
+          this.additional_questions[question.id] = [];
       }
     }
-    console.log(this.mandatory_questions);*/
+    this.lock_swipe = false;
+    console.log(this.additional_questions[1]);
+    console.log(this.base_questions);
   }
   display(){
   //this.save_answers();
@@ -41,44 +41,95 @@ export class SurveyPage {
   }
 
   check_possible(){
-    if(this.slides.getActiveIndex() > 1){
-      if(this.surveyData.survey[this.slides.getActiveIndex()].obligatory){
-          if(this.mandatory_questions[this.slides.getActiveIndex()].answer == ""){
-              this.slides.lockSwipeToNext(true);
+    if(this.slides.getPreviousIndex() > 0 && this.slides.getActiveIndex() != this.slides.length()){
+      if(this.base_questions[this.slides.getActiveIndex()-2].obligatory){
+          if(typeof this.base_questions[this.slides.getActiveIndex()-2].answer != "number"
+          && this.base_questions[this.slides.getActiveIndex()-2].answer == ""){
               this.missingAnswer();
-          }
-          else{
-            this.slides.lockSwipeToNext(false);
           }
       }
     }
   }
-
-  /*missingAnswer() {
+  swipe_unlock(){
+      this.slides.lockSwipes(false);
+  }
+  missingAnswer() {
     let alert = this.alertCtrl.create({
       title: 'La question est obligatoire',
-      subTitle: 'Merci d\' y répondre afin de pouvoir poursuivre le questionnaire',
-      buttons: ['Ok']
+      subTitle: 'Merci d\'y répondre afin de pouvoir poursuivre le questionnaire',
+      buttons: 
+      [
+        {
+          text : 'Ok',
+          handler:()=>{
+            this.slides.slidePrev();
+            this.slides.lockSwipes(true);
+            this.lock_swipe = true;}
+        }
+      ]
     });
-//    alert.present();
-  }*/
+   alert.present();
+  }
 
   send_survey(){
     this.surveyData.uploadSurvey();
     this.navCtrl.setRoot(MenuPage);
   }
-
+  
+  insert_question(question:Question,index:number,parent_id:number){
+      if(this.base_questions.every((q:Question,i:number,tab:Question[])=>{return q.id != question.id;})){
+        console.log("Insertion");
+        this.additional_questions[parent_id].push(question);
+        this.base_questions.splice(index,0,question);
+        console.log(this.base_questions);
+        console.log(this.additional_questions[parent_id]);
+      }
+  }
+  delete_question(parent_position:number,relative_position:number, parent_id:number){ 
+    this.base_questions.splice(parent_position+relative_position+1,1);
+    this.additional_questions[parent_id].splice(relative_position,1);
+    console.log("Suppression");
+    console.log(this.base_questions);
+    console.log(this.additional_questions[parent_id]);
+  }
   displayable(question:Question){
     if(!question.isSub){
       return true;
     }else{
       let answer: any = this.surveyData.survey[question.parentsQuestionPosition].answer;
-      if(typeof answer === "number"){
-        return answer == question.parentsQuestionValue;
+      let parent_position : number;
+      for(let i = 0; i < this.base_questions.length; i++){
+        if(this.base_questions[i].position == question.parentsQuestionPosition){
+            parent_position = i;
+            break;
+        }
+      }
+      let parent_id : number = this.base_questions[parent_position].id;
+      if(typeof answer == "number"){
+          if(answer == question.parentsQuestionValue){
+            this.insert_question(question,parent_position+this.additional_questions[parent_id].length+1,parent_id);
+            return true;
+          }
+          else{ 
+            for(let id in this.additional_questions){
+                if(this.surveyData.survey[question.parentsQuestionPosition].id == parseInt(id)
+                     && this.additional_questions[parseInt(id)].indexOf(question)>-1){
+                    this.delete_question(parent_position,this.additional_questions[parseInt(id)].indexOf(question),parent_id);
+                }
+            }
+            return false;
+          }
       }else{
         for(let ans of answer){
           if(ans == question.parentsQuestionValue){
+            this.insert_question(question,parent_position + this.additional_questions[parent_id].length +1,parent_id);
             return true;
+          }
+        }
+        for(let id in this.additional_questions){
+          if(this.surveyData.survey[question.parentsQuestionPosition].id == parseInt(id)
+               && this.additional_questions[parseInt(id)].indexOf(question)>-1){
+              this.delete_question(parent_position,this.additional_questions[parseInt(id)].indexOf(question),parent_id);
           }
         }
         return false;
