@@ -56,7 +56,22 @@ export class MenuPage {
   refresh_data(){
     this.studentsData.getCoursesOnline();
   }
-
+  display_help(){
+    let alert = this.alertCtrl.create({
+      title: 'Aide',
+      message: 'Faites glisser un cours vers la gauche pour l\'évaluer. \n Cliquez sur un cours pour obtenir toutes les informations relatives à ce cours.',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+  display_credits(){
+    let alert = this.alertCtrl.create({
+      title: 'Crédits',
+      message: 'Cette application a été réalisée par Hervé ANDRES, Marc-Antoine AUGÉ,Bastien DÉCHAMPS et Michaël KARPE en collaboration avec Barbara GERARD pour l\'aspect pratique et Xavier CLERC pour l\'aspect technique',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
   openModal(course){
       let myModal = this.modalCtrl.create(CoursesModalPage, {
         label: course.label,
