@@ -57,7 +57,7 @@ export class SurveyPage {
     let alert = this.alertCtrl.create({
       title: 'La question est obligatoire',
       subTitle: 'Merci d\'y répondre afin de pouvoir poursuivre le questionnaire',
-      buttons: 
+      buttons:
       [
         {
           text : 'Ok',
@@ -75,7 +75,7 @@ export class SurveyPage {
     this.surveyData.uploadSurvey();
     this.navCtrl.setRoot(MenuPage);
   }
-  
+
   insert_question(question:Question,index:number,parent_id:number){
       if(this.base_questions.every((q:Question,i:number,tab:Question[])=>{return q.id != question.id;})){
         console.log("Insertion");
@@ -85,13 +85,14 @@ export class SurveyPage {
         console.log(this.additional_questions[parent_id]);
       }
   }
-  delete_question(parent_position:number,relative_position:number, parent_id:number){ 
+  delete_question(parent_position:number,relative_position:number, parent_id:number){
     this.base_questions.splice(parent_position+relative_position+1,1);
     this.additional_questions[parent_id].splice(relative_position,1);
     console.log("Suppression");
     console.log(this.base_questions);
     console.log(this.additional_questions[parent_id]);
   }
+
   displayable(question:Question){
     if(!question.isSub){
       return true;
@@ -109,8 +110,7 @@ export class SurveyPage {
           if(answer == question.parentsQuestionValue){
             this.insert_question(question,parent_position+this.additional_questions[parent_id].length+1,parent_id);
             return true;
-          }
-          else{ 
+          }else{
             for(let id in this.additional_questions){
                 if(this.surveyData.survey[question.parentsQuestionPosition].id == parseInt(id)
                      && this.additional_questions[parseInt(id)].indexOf(question)>-1){
@@ -120,12 +120,13 @@ export class SurveyPage {
             return false;
           }
       }else{
-        for(let ans of answer){
-          if(ans == question.parentsQuestionValue){
-            this.insert_question(question,parent_position + this.additional_questions[parent_id].length +1,parent_id);
-            return true;
-          }
+          // select many
+        if(answer[question.parentsQuestionValue]){
+          this.insert_question(question,parent_position + this.additional_questions[parent_id].length +1,parent_id);
+          return true;
+
         }
+
         for(let id in this.additional_questions){
           if(this.surveyData.survey[question.parentsQuestionPosition].id == parseInt(id)
                && this.additional_questions[parseInt(id)].indexOf(question)>-1){

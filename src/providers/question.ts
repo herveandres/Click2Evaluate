@@ -37,6 +37,16 @@ export class Question{
      this.isSub = q.isSub;
      this.parentsQuestionValue = q.parentsQuestionsValue;
      this.parentsQuestionPosition = q.parentsQuestionPosition;
-     this.answer = "";
+
+     if(this.type_question == "select"){
+      this.answer = new Array<number>();
+      for(let index = 0; index < this.type_data.length; index++){
+        this.answer.push(false);
+      }
+       console.log(this.answer);
+     }else{
+        this.answer = "";
+     }
+
    }
 }
