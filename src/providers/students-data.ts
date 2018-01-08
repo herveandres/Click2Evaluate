@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
+import { LocalNotifications } from "@ionic-native/local-notifications";
 
 import { API } from '../providers/api';
 import { CourseData } from '../providers/course-data';
@@ -18,9 +19,14 @@ export class StudentsData{
   ldap: string; // id like vorname.name@enpc.fr
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
+  notifying: boolean = false; // to know if there is a notif scheduled
 
-  constructor(public http: Http, public surveyData:SurveyData,
-    private storage: Storage, public api: API, private alertCtrl:AlertController){
+  constructor(public http: Http,
+              public surveyData:SurveyData,
+              private storage: Storage,
+              public api: API,
+              private alertCtrl:AlertController,
+              private localNotif: LocalNotifications){
   }
 
   isAlreadyConnected(){
@@ -178,8 +184,66 @@ export class StudentsData{
     this.courses = [];
     console.log(this.ldap + " is now disconnected");
     this.connected = false;
+    this.localNotif.cancelAll();
     this.storage.clear();
   }
+
+  // return true if there is a survey to answer
+  // in order to schedule notifications
+  CoursesToEvaluate() {
+    let nbCoursesToEval: number = 0;
+    for (let course of this.courses){
+      if(new Date().getTime() - new Date(course.availableDate).getTime() >= 0){
+        if(new Date().getTime() - new Date(course.commissionsDate).getTime() <= 0){
+          nbCoursesToEval += 1;
+        }
+      }
+    }
+    return nbCoursesToEval;
+  }
+
+  // schedule a notification if a survey is available
+  scheduleNotif(){
+    let nbCourse: number = this.CoursesToEvaluate();
+    if(nbCourse>0){
+      console.log("Scheduling notif : Il reste " + nbCourse + " cours à évaluer");
+      this.localNotif.schedule({
+        id: 1,
+        title: 'Click2Evaluate',
+        text: 'Il te reste ' + nbCourse + ' cours à évaluer !',
+        at: new Date(new Date().getTime() + 2600)
+      });
+    }
+
+
+
+  /*
+    this.getAllScheduled().resolve([]).then(() => (
+      let scheduleOk: boolean = false;
+      let dateSch = new Date();
+      for (let course of this.courses) {
+        if (!(new Date().getTime() - new Date(course.availableDate).getTime() < 0)) {
+          if (!(new Date().getTime() - new Date(course.commissionsDate).getTime() > 0)) {
+            if (!course.answered) {
+              scheduleOk = true;
+              dateSch = course.availableDate;
+            }
+          }
+        }
+      }
+
+      if (scheduleOk){
+        this.localNotif.schedule({
+          id: 1,
+          title: 'Click2Evaluate',
+          text: 'Hey ! Il te reste des cours à évaluer',
+          at: dateSch
+        });
+      }
+    ));*/
+  }
+
+
 
   /*getCoursesOnline_noServer(){
     this.courses = [];

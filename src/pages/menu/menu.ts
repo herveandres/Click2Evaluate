@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { StudentsData } from "../../providers/students-data";
 import { SurveyData } from "../../providers/survey-data";
@@ -19,10 +20,15 @@ export class MenuPage {
 
   constructor(public navCtrl: NavController, public studentsData: StudentsData,
     public surveyData:SurveyData, public modalCtrl: ModalController,
-    private alertCtrl: AlertController){
+    private alertCtrl: AlertController, private localNotif: LocalNotifications){
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
+    this.localNotif.on('click', () => {
+      console.log("Notification clicked !");
+      this.navCtrl.setRoot(MenuPage);
+    });
+    //this.studentsData.scheduleNotif();
   }
 
   ionViewWillLeave(){
@@ -90,6 +96,10 @@ export class MenuPage {
   disconnect(){
     this.studentsData.disconnect();
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  scheduleNotif(){
+    this.studentsData.scheduleNotif();
   }
 
 }

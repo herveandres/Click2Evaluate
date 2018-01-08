@@ -27,4 +27,5 @@ export class CourseData{
     this.submissionDate = data.submissionDate;
     console.log(this);
   }
+
 }
