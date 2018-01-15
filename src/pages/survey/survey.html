@@ -56,7 +56,7 @@
           </ion-item>
 
           <ion-item *ngIf='question.type_question == "text"'>
-            <ion-label> {{ question.summary }}</ion-label>
+            <!--<ion-label> {{ question.summary }} COUCOU</ion-label> -->
             <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">  </ion-textarea>
           </ion-item>
 
@@ -72,9 +72,9 @@
 
 
          <ion-list *ngIf='question.type_question == "selectOne"' radio-group [(ngModel)]="question.answer">
-           <ion-list-header>
-             {{ question.label}}
-           </ion-list-header>
+           <!--<ion-list-header>
+             {{ question.label }}
+           </ion-list-header>-->
            <ion-item *ngFor="let choice of question.type_data, let index = index">
              <ion-label>{{ choice }}</ion-label>
              <ion-radio [value]="index" (ionSelect)="swipe_unlock()"></ion-radio>
