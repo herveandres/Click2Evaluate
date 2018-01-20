@@ -77,7 +77,12 @@ export class SurveyData{
       Promise.all(this.survey.map(
         question => {
           return new Promise((resolve, reject) => {
-            let ans = { answer: question.answer};
+            let ans;
+            if(question.type_question == 'select'){
+              ans = { answer: question.answer.join(';')};
+            }else{
+              ans = { answer: question.answer};
+            }
             this.http.post(url + question.id + "/", ans)
             .subscribe(res => {
               resolve(question);
