@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 // This class contains all data used to connect the API
 
 export class API{
