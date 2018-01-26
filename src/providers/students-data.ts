@@ -1,3 +1,4 @@
+import { CourseData } from './course-data';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -152,7 +153,14 @@ export class StudentsData{
         })
     }
   }
-
+  sort_courses(course1: CourseData, course2: CourseData){
+    if(course1.label < course2.label){
+      return -1;
+    }
+    else{
+      return 1;
+    }
+  }
   getCourses(){
     console.log("Trying to get courses for : " + this.ldap);
     if(this.courses.length > 0){
@@ -162,10 +170,10 @@ export class StudentsData{
     if(this.connected){
       // get courses in local storage
       if(this.getCoursesFromLocalStorage()){
+        this.courses.sort(this.sort_courses);
         return true;
       }else{
-        this.getCoursesOnline().then(res => {console.log(res);});
-
+        this.getCoursesOnline().then(res => {console.log(res);this.courses.sort(this.sort_courses);});
         return true;
       }
     }
