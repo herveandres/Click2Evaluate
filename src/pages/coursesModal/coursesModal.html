@@ -15,7 +15,7 @@
 <ion-content padding>
 
     <ion-card text-center>
-      <ion-card-header>
+      <ion-card-header class="line-break">
         Module : <br/>
         {{ label }}
       </ion-card-header>
@@ -55,7 +55,7 @@
 -->
 
   <div *ngIf="available">
-  <div *ngIf="!answered" padding>
+  <div *ngIf="answered == 'Non'" padding>
       <button ion-button color="primary" block (click)="openSurvey()"> Évaluer </button>
   </div></div>
 

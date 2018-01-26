@@ -18,7 +18,7 @@ import { CoursesModalPage } from "../coursesModal/coursesModal";
 })
 export class MenuPage {
 
-  constructor(public navCtrl: NavController, public studentsData: StudentsData,
+    constructor(public navCtrl: NavController, public studentsData: StudentsData,
     public surveyData:SurveyData, public modalCtrl: ModalController,
     private alertCtrl: AlertController, private localNotif: LocalNotifications){
     if(this.studentsData.connected){
@@ -80,15 +80,9 @@ export class MenuPage {
   }
   openModal(course){
       let myModal = this.modalCtrl.create(CoursesModalPage, {
-        label: course.label,
-        id: course.id,
-        answered: course.answered,
-        group: course.group,
-        delegate: course.delegate,
-        commissionsDate: course.commissionsDate,
-        availableDate: course.availableDate,
-        typeForm: course.typeForm,
+        courseToDisplay: course,
         available: this.available(course),
+        surveyData:this.surveyData
       });
       myModal.present();
   }

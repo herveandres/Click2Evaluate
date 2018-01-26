@@ -12,8 +12,9 @@
     <ion-slide>
 
       <ion-card text-center>
-        <ion-card-header>
-          Évaluation du module : {{ surveyData.course.label }}
+        <ion-card-header class='line-break'>
+          Évaluation du module :
+          {{ surveyData.course.label }}
         </ion-card-header>
         <ion-card-content>
           Pour parcourir le questionnaire, il suffit de faire glisser la
@@ -72,11 +73,11 @@
 
 
          <ion-list *ngIf='question.type_question == "selectOne"' radio-group [(ngModel)]="question.answer">
-           <!--<ion-list-header>
-             {{ question.label }}
-           </ion-list-header>-->
+           <!-- <ion-list-header>
+             {{ question.label}}
+           </ion-list-header> -->
            <ion-item *ngFor="let choice of question.type_data, let index = index">
-             <ion-label>{{ choice }}</ion-label>
+             <ion-label  class='line-break'>{{ choice }}</ion-label>
              <ion-radio [value]="index" (ionSelect)="swipe_unlock()"></ion-radio>
            </ion-item>
          </ion-list>
@@ -84,8 +85,8 @@
          <div >
            <ion-list *ngIf='question.type_question == "select"'>
              <ion-item *ngFor="let choice of question.type_data, let index = index">
-               <ion-label>{{ choice }}</ion-label>
-               <ion-checkbox [(ngModel)]="question.answer[index]" (ionSelect)="swipe_unlock"></ion-checkbox>
+               <ion-label class='line-break'>{{ choice }}</ion-label>
+               <ion-checkbox [(ngModel)]="question.answer[index]" (ionSelect)="swipe_unlock()"></ion-checkbox>
              </ion-item>
            </ion-list>
         </div>

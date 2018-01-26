@@ -24,7 +24,7 @@
 <ion-content padding>
   <div *ngIf="studentsData.connected">
     <ion-card text-center>
-      <ion-card-header>
+      <ion-card-header class="line-break">
         Bienvenue {{ studentsData.ldap }}
       </ion-card-header>
       <ion-card-content>
@@ -35,23 +35,11 @@
     </ion-card>
 
   <ion-list>
+      <ion-list-header> Cours disponibles à évaluer</ion-list-header>
       <div *ngFor='let course of studentsData.courses'>
-
-        <!--
-        * Disponible (ni trop tot ni trop tard)
-          * Non répondu
-          * Répondu
-
-        * Non Disponible
-          * Trop tot :
-          * Trop tard :
-            * Répondu :
-            * Non répondu :
-          -->
         <div *ngIf='available(course)'>
-
           <ion-item-sliding *ngIf='!course.answered' #slidingItem>
-            <ion-item (click)='openModal(course)'>
+            <ion-item (click)='openModal(course)' text-wrap>
               {{course.label}}
             </ion-item>
             <ion-item-options side='right' (ionSwipe)='openSurvey(course)'>
@@ -60,19 +48,22 @@
               </button>
             </ion-item-options>
           </ion-item-sliding>
-
+        </div>
+      </div> 
+      <ion-list-header> Cours déjà évalués</ion-list-header>
+      <div *ngFor='let course of studentsData.courses'>
           <ion-item-sliding *ngIf='course.answered'>
-            <ion-item (click)='openModal(course)'>
+            <ion-item (click)='openModal(course)' text-wrap>
               <ion-icon name="checkmark"></ion-icon> {{course.label}}
             </ion-item>
           </ion-item-sliding>
-        </div>
-
-
+      </div>
+      <ion-list-header> Cours non disponibles </ion-list-header>
+      <div *ngFor='let course of studentsData.courses'>
         <!-- courses unavailable (too soon) -->
         <div *ngIf='tooSoon(course)'>
             <ion-item-sliding *ngIf='!available(course)' #slidingItem>
-              <ion-item (click)='openModal(course)'>
+              <ion-item (click)='openModal(course)' text-wrap>
                 {{ course.label }}
               </ion-item>
               <ion-item-options side='right'>
@@ -83,21 +74,11 @@
 
         <div *ngIf='tooLate(course)'>
           <ion-item-sliding *ngIf='!course.answered' #slidingItem>
-            <ion-item (click)='openModal(course)'>
+            <ion-item (click)='openModal(course)' text-wrap>
               {{course.label}}
             </ion-item>
             <ion-item-options side='right'>
               Trop tard. 
-              <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="course.commissionsDate"></ion-datetime>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding *ngIf='course.answered' #slidingItem>
-            <ion-item (click)='openModal(course)'>
-              <ion-icon name="checkmark"></ion-icon> {{course.label}}
-            </ion-item>
-            <ion-item-options side='right'>
-              Vous avez répondu dans les temps. La date limite était le :
               <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="course.commissionsDate"></ion-datetime>
             </ion-item-options>
           </ion-item-sliding>
