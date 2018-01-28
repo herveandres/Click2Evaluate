@@ -19,8 +19,9 @@ import { CoursesModalPage } from "../coursesModal/coursesModal";
 export class MenuPage {
 
     constructor(public navCtrl: NavController, public studentsData: StudentsData,
-    public surveyData:SurveyData, public modalCtrl: ModalController,
-    private alertCtrl: AlertController, private localNotif: LocalNotifications){
+      public surveyData:SurveyData, public modalCtrl: ModalController,
+      private alertCtrl: AlertController, private localNotif: LocalNotifications){
+
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
@@ -82,7 +83,8 @@ export class MenuPage {
       let myModal = this.modalCtrl.create(CoursesModalPage, {
         courseToDisplay: course,
         available: this.available(course),
-        surveyData:this.surveyData
+        surveyData: this.surveyData,
+        this: this,
       });
       myModal.present();
   }
