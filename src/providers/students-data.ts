@@ -19,7 +19,7 @@ export class StudentsData{
   ldap: string; // id like vorname.name@enpc.fr
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
-  notifying: boolean = false; // to know if there is a notif scheduled
+  notifPermission: boolean = false; // to know if there is a notif scheduled
 
   constructor(public http: Http,
               public surveyData:SurveyData,
@@ -27,6 +27,8 @@ export class StudentsData{
               public api: API,
               private alertCtrl:AlertController,
               private localNotif: LocalNotifications){
+
+
   }
 
   isAlreadyConnected(){
@@ -172,7 +174,18 @@ export class StudentsData{
         this.courses.sort(this.sort_courses);
         return true;
       }else{
-        this.getCoursesOnline().then(res => {console.log(res);this.courses.sort(this.sort_courses);});
+        this.getCoursesOnline().then(res => {
+          console.log(res);
+          this.courses.sort(this.sort_courses);
+          /*this.localNotif.hasPermission().then(res => {
+            if (res) {
+              this.scheduleDelegateNotif();
+              //this.scheduleRemindNotif();
+            }
+          }, err => {
+            console.log("Impossible to schedule remind and delegate notifications");
+          });*/
+        });
         return true;
       }
     }
@@ -191,36 +204,101 @@ export class StudentsData{
     this.courses = [];
     console.log(this.ldap + " is now disconnected");
     this.connected = false;
-    this.localNotif.cancelAll();
+    this.localNotif.hasPermission().then(res => {
+      if (res) {this.localNotif.cancelAll();}
+    }, err => {});
     this.storage.clear();
   }
 
-  // return true if there is a survey to answer
+  // return how many surveys it remains to answer
   // in order to schedule notifications
   CoursesToEvaluate() {
     let nbCoursesToEval: number = 0;
     for (let course of this.courses){
       if(new Date().getTime() - new Date(course.availableDate).getTime() >= 0){
         if(new Date().getTime() - new Date(course.commissionsDate).getTime() <= 0){
-          nbCoursesToEval += 1;
+          if (!course.answered) {
+            nbCoursesToEval += 1;
+          }
         }
       }
     }
     return nbCoursesToEval;
   }
 
-  // schedule a notification if a survey is available
-  scheduleNotif(){
+
+
+  // schedule a notification if a survey is available (to test, and to show how a notification works)
+  scheduleNotifTest(){
+    this.localNotif.hasPermission().then(res => {
+      if (res) {
+        console.log("Has permission to schedule notifications");
+        let nbCourse: number = this.CoursesToEvaluate();
+        if(nbCourse>0){
+          console.log("Scheduling notif : Il reste " + nbCourse + " cours à évaluer");
+          this.localNotif.schedule({
+            id: -1,
+            title: 'Click2Evaluate',
+            text: 'Il te reste ' + nbCourse + ' cours à évaluer !',
+            at: new Date(new Date().getTime() + 2600)
+          });
+        }
+      }
+    }, err => {
+      console.log("Impossible to schedule the test notification !");
+    });
+  }
+
+/*
+
+  // Schedule remind notifications : From the moment when there is a course
+  // to evaluate, and until there aren't anymore or the commission dates are
+  // passed, a notification is scheduled every 2 days
+  scheduleRemindNotif() {
     let nbCourse: number = this.CoursesToEvaluate();
-    if(nbCourse>0){
-      console.log("Scheduling notif : Il reste " + nbCourse + " cours à évaluer");
-      this.localNotif.schedule({
-        id: 1,
-        title: 'Click2Evaluate',
-        text: 'Il te reste ' + nbCourse + ' cours à évaluer !',
-        at: new Date(new Date().getTime() + 2600)
+    if (nbCourse>0) {
+      console.log("There are courses to evaluate : checking if there are notifications scheduled...");
+      //let dateMin: number = (this.courses.map(course => course.availableDate.getTime())).min();
+      //let dateMax: number = (this.courses.map(course => course.commissionsDate.getTime())).max();
+      this.localNotif.isScheduled(1).then(res => {
+        if (!res) {
+          console.log("There aren't any notifications scheduled");
+          console.log("Scheduling notifications...");
+          this.localNotif.schedule({
+            id: 1,
+            title: 'Click2Evaluate',
+            text: 'Il te reste des cours à évaluer !',
+            every: 'minute',
+            firstAt: new Date()
+          });
+        }
+      }, err => {
+        console.log("Impossible to schedule the notifications");
       });
     }
+  }
+*/
+// Trigger a single notification to warn the user that he or she is a delegate
+// Designed to be triggered once per login
+/*scheduleDelegateNotif() {
+  let isDelegate: boolean = false;
+  for (let course of this.courses) {
+    if (course.delegate == this.ldap) {
+      isDelegate = true;
+      break;
+    }
+  }
+
+  if (isDelegate){
+    console.log("the current user is a delegate, a notification has been sent");
+    this.localNotif.schedule({
+      id: 0,
+      title: 'Click2Evaluate',
+      text: "Tu es le responsable d'un cours",
+      at: new Date(new Date().getTime() + 1000)
+      });
+    }
+  }*/
 
 
 
@@ -248,7 +326,7 @@ export class StudentsData{
         });
       }
     ));*/
-  }
+
 
 
 

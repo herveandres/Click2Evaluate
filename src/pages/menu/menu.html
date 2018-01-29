@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title (click) = 'scheduleNotif()' end>
+    <ion-title (click) = 'scheduleNotifTest()' end>
       Click2Evaluate
     </ion-title>
     <ion-buttons end>
@@ -49,7 +49,7 @@
             </ion-item-options>
           </ion-item-sliding>
         </div>
-      </div> 
+      </div>
       <ion-list-header> Cours déjà évalués</ion-list-header>
       <div *ngFor='let course of studentsData.courses'>
           <ion-item-sliding *ngIf='course.answered'>

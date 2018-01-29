@@ -94,8 +94,10 @@ export class MenuPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  scheduleNotif(){
-    this.studentsData.scheduleNotif();
+  scheduleNotifTest(){
+    this.studentsData.scheduleNotifTest();
   }
+
+
 
 }

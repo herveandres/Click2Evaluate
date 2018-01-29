@@ -21,13 +21,14 @@
       </ion-card-header>
       <ion-card-content>
         Questionnaire complété : {{ answered }} <br/> <br/>
-        Votre groupe : n°{{ group }} <br/> <br/>
+        <div *ngIf="group > 0">Votre groupe : n°{{ group }}</div>
+        <div *ngIf="group == 0">Pas de groupes pour ce module</div><br/>
         Délégué du groupe : <br/> {{ delegate }} <br/> <br/>
         Ouverture du questionnaire : <br/> {{ availableDate }} <br/> <br/>
         Fermeture du questionnaire : <br/> {{ commissionsDate }}
       </ion-card-content>
     </ion-card>
-    
+
   <!---
   <h1> Module {{ id }} : {{ label }} </h1>
   <ion-list>
