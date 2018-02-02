@@ -27,7 +27,6 @@
     <div *ngFor="let question of surveyData.survey">
 
         <ion-slide  *ngIf="displayable(question)">
-
           <!-- Si la question est obligatoire, on affiche un logo + 'question obligatoire' -->
           <div *ngIf='question.obligatory' class="center">
             <!--<ion-icon  name='alert'></ion-icon>-->
@@ -49,7 +48,6 @@
 
           <!-- On affiche la question suivant le type de celle-ci -->
           <ion-item *ngIf='question.type_question == "inline"'>
-            <ion-label> {{ question.summary }} </ion-label>
             <ion-input type="text" [(ngModel)]="question.answer"
                 placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">
               </ion-input>
@@ -57,13 +55,11 @@
           </ion-item>
 
           <ion-item *ngIf='question.type_question == "text"'>
-            <!--<ion-label> {{ question.summary }} COUCOU</ion-label> -->
             <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">  </ion-textarea>
           </ion-item>
 
           <!-- Old version with 'ion-select' (change __selectOne__ to selectOne to test) -->
           <ion-item *ngIf='question.type_question == "__selectOne__"'>
-            <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="false" [(ngModel)]="question.answer">
              <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
                {{ choice }}
@@ -71,11 +67,7 @@
            </ion-select>
          </ion-item>
 
-
          <ion-list *ngIf='question.type_question == "selectOne"' radio-group [(ngModel)]="question.answer">
-           <!-- <ion-list-header>
-             {{ question.label}}
-           </ion-list-header> -->
            <ion-item *ngFor="let choice of question.type_data, let index = index">
              <ion-label  class='line-break'>{{ choice }}</ion-label>
              <ion-radio [value]="index" (ionSelect)="swipe_unlock()"></ion-radio>
@@ -92,7 +84,6 @@
         </div>
 
           <ion-item *ngIf='question.type_question == "seilect"'>
-            <ion-label> {{ question.summary }} </ion-label>
             <ion-select  multiple="true" [(ngModel)]="question.answer">
              <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
                {{ choice }}
@@ -100,10 +91,7 @@
            </ion-select>
          </ion-item>
 
-
-
           <ion-item *ngIf='question.type_question == "number"'>
-            <ion-label> {{ question.summary }} </ion-label> <!-- Rajouter les bornes -->
              <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer" (input)="swipe_unlock()"></ion-input>
           </ion-item>
 
