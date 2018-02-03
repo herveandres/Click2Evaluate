@@ -9,7 +9,6 @@ export class Question{
   id:number;
   position: number;
   title:string;
-  summary:string;
   label:string;         // ex. Pensez-vous que ce cours doit être maintenu ?
   obligatory:boolean;   // If we have to answer to this question ("true" or "false")
   answer: any;        // even if the answer is a number, we convert it to string
@@ -28,7 +27,6 @@ export class Question{
    constructor(q: any){
      this.id = q.id;
      this.position = q.position;
-     this.summary = q.summary;
      this.label = q.label;
      this.obligatory = q.obligatory;
      this.title = q.title;
