@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SurveyData } from '../../providers/survey-data';
+import { StudentsData } from "../../providers/students-data";
 import { Question } from '../../providers/question';
 
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { MenuPage } from '../menu/menu';
 import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
@@ -19,7 +21,11 @@ export class SurveyPage {
   lock_swipe: boolean;
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController, public surveyData:SurveyData, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+              public surveyData:SurveyData,
+              private alertCtrl: AlertController,
+              public studentsData: StudentsData,
+              private localNotif: LocalNotifications) {
     for(let question of this.surveyData.survey){
       console.log("Boucle");
       if(this.displayable(question)){
@@ -73,7 +79,18 @@ export class SurveyPage {
 
   send_survey(){
     this.surveyData.uploadSurvey();
+    this.rescheduleReminfNotif();
     this.navCtrl.setRoot(MenuPage);
+  }
+
+  rescheduleReminfNotif(){
+    let nbCourses: number = this.studentsData.CoursesToEvaluate();
+    if (nbCourses > 0){
+      console.log("Nb of courses remaining : ", nbCourses);
+    } else {
+      console.log("There are not courses to evaluate anymore, cancelling remind notifications...");
+      this.localNotif.cancel(1);
+    }
   }
 
   insert_question(question:Question,index:number,parent_id:number){

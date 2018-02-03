@@ -25,11 +25,11 @@ export class MenuPage {
     if(this.studentsData.connected){
       this.studentsData.getCourses();
     }
+
     this.localNotif.on('click', () => {
       console.log("Notification clicked !");
       this.navCtrl.setRoot(MenuPage);
     });
-    //this.studentsData.scheduleNotif();
   }
 
   ionViewWillLeave(){
@@ -61,7 +61,7 @@ export class MenuPage {
   }
 
   refresh_data(){
-    this.studentsData.getCoursesOnline();
+    this.studentsData.getCourses();
   }
   display_help(){
     let alert = this.alertCtrl.create({
@@ -94,10 +94,17 @@ export class MenuPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
+// For debugging
   scheduleNotifTest(){
     this.studentsData.scheduleNotifTest();
   }
 
+  scheduleRemindNotif() {
+    this.studentsData.scheduleRemindNotif();
+  }
 
+  cancelTestNotif() {
+    this.studentsData.cancelTestNotif();
+  }
 
 }

@@ -109,7 +109,6 @@ export class SurveyData{
       })
     }else{
       this.course.answered = true;
-
     }
   }
 }
