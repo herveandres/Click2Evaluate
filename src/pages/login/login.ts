@@ -30,7 +30,7 @@ export class LoginPage {
 
   }
   login(){
-    this.studentsData.connect(this.account.ldap, this.account.password, this.stayConnected).then(
+    this.studentsData.connect(this.account.ldap, this.account.password, true).then(
         res => {
             if(res){
           this.navCtrl.setRoot(MenuPage);

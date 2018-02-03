@@ -1,0 +1,25 @@
+[
+  {
+    "Id": "SPORT",
+    "label": "Module de Sport",
+    "dateComission": "2018-02-14T12:00:00",
+    "dateDisponibilite": "2017-12-22T11:00:00",
+    "typeQuestionnaire": "Classique",
+    "delegues": "henri.becquerel@enpc.fr;jean.tirole@enpc.fr"
+  },
+  {
+    "Id": "MATHS",
+    "label": "Analyse et Calcul scientifique",
+    "dateComission": "2018-02-14T12:00:00",
+    "dateDisponibilite": "2017-12-20T11:00:00",
+    "typeQuestionnaire": "Classique",
+    "delegues": "guy.beart@enpc.fr;eugene.belgrand@enpc.fr",
+  },
+  {
+    "Id": "MECA",
+    "label": "Mécanique des milieux continus",
+    "dateComission": "2019-02-14T12:00:00",
+    "dateDisponibilite": "2019-01-19T14:00:00",
+    "delegues": "albert.caquot@enpc.fr",
+  }
+]

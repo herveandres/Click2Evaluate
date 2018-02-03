@@ -31,10 +31,12 @@
           <ion-input type="password" placeholder="Mot de passe" [(ngModel)]="account.password" [ngModelOptions]="{standalone: true}"></ion-input>
         </ion-item>
 
+        <!-- Disabled
         <ion-item>
           <ion-label>Rester connecté</ion-label>
           <ion-checkbox checked="true" [(ngModel)]="stayConnected" [ngModelOptions]="{standalone: true}"></ion-checkbox>
         </ion-item>
+        -->
 
         <p *ngIf="incorrectAuthentification">
           Identifiant ou mot de passe incorrect.

@@ -12,7 +12,7 @@ import { SurveyData } from '../providers/survey-data';
 // Connect somebody (verify if ldap and password are corresponding)
 // and download the list of his courses
 // If stayConnected save the data in the local storage
-// Now it works with .json files in assets/data/
+// Now it works with .json files in assets/data_offline_version/
 
 @Injectable()
 export class StudentsData{
@@ -94,7 +94,7 @@ export class StudentsData{
     console.log("Trying to connect : " + ldap);
     this.ldap = ldap;
     return new Promise(resolve => {
-      this.http.get('assets/data/data_students.json')
+      this.http.get('assets/data_offline_version/data_students.json')
       .map(res => res.json())
       .subscribe(data => {
         this.connected = (data.filter(h => h.LOGIN_LDAP == this.ldap).length > 0);
@@ -127,7 +127,7 @@ export class StudentsData{
         {
           let url: string;
           if(this.api.noServer){
-            url = 'assets/data/marc-antoine.json';
+            url = 'assets/data_offline_version/modules.json';
           }else{
             url = this.api.url + "courses/" + this.ldap + "/";
           }
@@ -136,6 +136,7 @@ export class StudentsData{
           .map(res => res.json())
           .subscribe(courses =>
             {
+              console.log(courses);
               this.courses = [];
               courses.map(x =>
                 {
@@ -154,6 +155,7 @@ export class StudentsData{
         })
     }
   }
+
   sort_courses(course1: CourseData, course2: CourseData){
     if(course1.label < course2.label){
       return -1;
@@ -322,7 +324,7 @@ scheduleDelegateNotif() {
       }else{
         return new Promise(resolve =>
           {
-          this.http.get('assets/data/data_students.json')
+          this.http.get('assets/data_offline_version/data_students.json')
           .map(res => res.json())
           .subscribe(courses =>
             {
@@ -345,7 +347,7 @@ scheduleDelegateNotif() {
   /*addCourse(code_module: string, group: number, answered: boolean){
     console.log("Trying to add course with id : " + code_module);
     return new Promise(resolve => {
-      this.http.get('assets/data/data_courses.json')
+      this.http.get('assets/data_offline_version/data_courses.json')
       .map(res => res.json())
       .subscribe(data => {
         let course = new CourseData(data.filter(h => h.Id == code_module)[0], group, answered);

@@ -1,0 +1,133 @@
+[
+  {
+    "NOM": "BECQUEREL",
+    "PRENOM": "Henri",
+    "LOGIN_LDAP": "henri.becquerel@enpc.fr",
+    "MAIL": "henri.becquerel@eleves.enpc.fr",
+    "DEPARTEMENT": "VET",
+    "LIBELLE_MODULE": "Module de sport",
+    "CODE_MODULE": "SPORT",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "BECQUEREL",
+    "PRENOM": "Henri",
+    "LOGIN_LDAP": "henri.becquerel@enpc.fr",
+    "MAIL": "henri.becquerel@eleves.enpc.fr",
+    "DEPARTEMENT": "VET",
+    "LIBELLE_MODULE": "Analyse et calcul scientifique",
+    "CODE_MODULE": "MATHS",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "BECQUEREL",
+    "PRENOM": "Henri",
+    "LOGIN_LDAP": "henri.becquerel@enpc.fr",
+    "MAIL": "henri.becquerel@eleves.enpc.fr",
+    "DEPARTEMENT": "VET",
+    "LIBELLE_MODULE": "Mécanique des milieux continus",
+    "CODE_MODULE": "MECA",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "BÉART",
+    "PRENOM": "Guy",
+    "LOGIN_LDAP": "guy.beart@enpc.fr",
+    "MAIL": "guy.beart@eleves.enpc.fr",
+    "DEPARTEMENT": "GMM",
+    "LIBELLE_MODULE": "Module de sport",
+    "CODE_MODULE": "SPORT",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "BÉART",
+    "PRENOM": "Guy",
+    "LOGIN_LDAP": "guy.beart@enpc.fr",
+    "MAIL": "guy.beart@eleves.enpc.fr",
+    "DEPARTEMENT": "GMM",
+    "LIBELLE_MODULE": "Analyse et calcul scientifique",
+    "CODE_MODULE": "MATHS",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "BÉART",
+    "PRENOM": "Guy",
+    "LOGIN_LDAP": "guy.beart@enpc.fr",
+    "MAIL": "guy.beart@eleves.enpc.fr",
+    "DEPARTEMENT": "GMM",
+    "LIBELLE_MODULE": "Mécanique des milieux continus",
+    "CODE_MODULE": "MECA",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "TIROLE",
+    "PRENOM": "Jean",
+    "LOGIN_LDAP": "jean.tirole@enpc.fr",
+    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "DEPARTEMENT": "IMI",
+    "LIBELLE_MODULE": "Module de sport",
+    "CODE_MODULE": "SPORT",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "TIROLE",
+    "PRENOM": "Jean",
+    "LOGIN_LDAP": "jean.tirole@enpc.fr",
+    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "DEPARTEMENT": "IMI",
+    "LIBELLE_MODULE": "Analyse et calcul scientifique",
+    "CODE_MODULE": "MATHS",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "TIROLE",
+    "PRENOM": "Jean",
+    "LOGIN_LDAP": "jean.tirole@enpc.fr",
+    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "DEPARTEMENT": "IMI",
+    "LIBELLE_MODULE": "Mécanique des milieux continus",
+    "CODE_MODULE": "MECA",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+{
+    "NOM": "AUBRAC",
+    "PRENOM": "Raymond",
+    "LOGIN_LDAP": "raymond.aubrac@enpc.fr",
+    "MAIL": "raymond.aubrac@eleves.enpc.fr",
+    "DEPARTEMENT": "IMI",
+    "LIBELLE_MODULE": "Module de sport",
+    "CODE_MODULE": "SPORT",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "AUBRAC",
+    "PRENOM": "Raymond",
+    "LOGIN_LDAP": "raymond.aubrac@enpc.fr",
+    "MAIL": "raymond.aubrac@eleves.enpc.fr",
+    "DEPARTEMENT": "GMM",
+    "LIBELLE_MODULE": "Analyse et calcul scientifique",
+    "CODE_MODULE": "MATHS",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  },
+  {
+    "NOM": "AUBRAC",
+    "PRENOM": "Raymond",
+    "LOGIN_LDAP": "raymond.aubrac@enpc.fr",
+    "MAIL": "raymond.aubrac@eleves.enpc.fr",
+    "DEPARTEMENT": "GMM","LIBELLE_MODULE": "Mécanique des milieux continus",
+    "CODE_MODULE": "MECA",
+    "SC_GROUPE": 1,
+    "PERIODE": "Automne"
+  }
+]
