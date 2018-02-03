@@ -27,7 +27,6 @@
     <div *ngFor="let question of surveyData.survey">
 
         <ion-slide  *ngIf="displayable(question)">
-
           <!-- Si la question est obligatoire, on affiche un logo + 'question obligatoire' -->
           <div *ngIf='question.obligatory' class="center">
             <!--<ion-icon  name='alert'></ion-icon>-->
