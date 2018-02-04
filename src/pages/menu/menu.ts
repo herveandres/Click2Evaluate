@@ -94,17 +94,4 @@ export class MenuPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-// For debugging
-  scheduleNotifTest(){
-    this.studentsData.scheduleNotifTest();
-  }
-
-  scheduleRemindNotif() {
-    this.studentsData.scheduleRemindNotif();
-  }
-
-  cancelTestNotif() {
-    this.studentsData.cancelTestNotif();
-  }
-
 }
