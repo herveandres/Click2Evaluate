@@ -258,8 +258,7 @@ export class StudentsData{
             title: 'Click2Evaluate',
             text: 'Il te reste des cours à évaluer !',
             firstAt: tomorrow,
-            every: 259200, // 3 days in second
-            unit: 'second'
+            every: "week"// 3 days in second
           });
         } else {
           console.log("Remind notifications are already scheduled...");
