@@ -40,6 +40,7 @@
         <div *ngIf='available(course)'>
           <ion-item-sliding *ngIf='!course.answered' #slidingItem>
             <ion-item (click)='openModal(course)' text-wrap>
+              <ion-icon *ngIf='course.delegate == this.studentsData.ldap' name='warning' item-end></ion-icon>
               {{course.label}}
             </ion-item>
             <ion-item-options side='right' (ionSwipe)='openSurvey(course)'>
@@ -64,6 +65,7 @@
         <div *ngIf='tooSoon(course)'>
             <ion-item-sliding *ngIf='!available(course)' #slidingItem>
               <ion-item (click)='openModal(course)' text-wrap>
+                <ion-icon *ngIf='course.delegate == this.studentsData.ldap' name='warning' item-end></ion-icon>
                 {{ course.label }}
               </ion-item>
               <ion-item-options side='right'>

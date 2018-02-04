@@ -181,7 +181,7 @@ export class StudentsData{
           this.courses.sort(this.sort_courses);
           this.localNotif.hasPermission().then(res => {
             if (res) {
-              this.scheduleDelegateNotif();
+              //this.scheduleDelegateNotif();
               this.scheduleRemindNotif();
             }
           }, err => {
@@ -277,7 +277,7 @@ export class StudentsData{
             id: 1,
             title: 'Click2Evaluate',
             text: 'Il te reste des cours à évaluer !',
-            every: 'day', // 2 jours en secondes
+            every: 'day',
             at: tomorrow
           });
           console.log("Remind notification scheduled at : ", tomorrow);
@@ -292,28 +292,27 @@ export class StudentsData{
       this.localNotif.cancel(1);
     }
   }
-
+/*
 // Trigger a single notification to warn the user that he or she is a delegate
 // Designed to be triggered once per login
 scheduleDelegateNotif() {
-  let isDelegate: boolean = false;
+  let delegateCourses: string = "";
   for (let course of this.courses) {
     if (course.delegate == this.ldap) {
-      isDelegate = true;
-      break;
+      delegateCourses = "- " + course.label + "\n";
     }
   }
 
-  if (isDelegate){
+  if (delegateCourses != ""){
     console.log("the current user is a delegate, a notification has been sent");
     this.localNotif.schedule({
       id: 0,
       title: 'Click2Evaluate',
-      text: "Tu es le responsable d'un cours",
+      text: "Tu es le responsable des modules :\n" + delegateCourses,
       at: new Date(new Date().getTime() + 1000)
       });
     }
-  }
+  }*/
 
   /*getCoursesOnline_noServer(){
     this.courses = [];

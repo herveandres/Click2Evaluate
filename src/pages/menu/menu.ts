@@ -66,7 +66,7 @@ export class MenuPage {
   display_help(){
     let alert = this.alertCtrl.create({
       title: 'Aide',
-      message: 'Faites glisser un cours vers la gauche pour l\'évaluer. \n Cliquez sur un cours pour obtenir toutes les informations relatives à ce cours.',
+      message: 'Faites glisser un cours vers la gauche pour l\'évaluer. \n Cliquez sur un cours pour obtenir toutes les informations relatives à ce cours.\n \nUn icône Warning est placé à côté des cours dont vous êtes responsables',
       buttons: ['Ok']
     });
     alert.present();
