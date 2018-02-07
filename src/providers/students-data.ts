@@ -47,9 +47,11 @@ export class StudentsData{
   }
 
   connect(ldap: string, password: string, stayConnected: boolean){
+    // stayConnected == true now
+    stayConnected = true;
 
     if(stayConnected){
-      this.storage.set("ldap", ldap);
+
     }else{
       this.storage.remove("ldap");
     }
@@ -57,15 +59,21 @@ export class StudentsData{
     if(this.api.noServer){
       return this.connect_noServer(ldap, password, stayConnected)
     }else{
-      console.log("Executing request : " + this.api.url + "student/" + ldap + "/");
+      console.log("Trying to connect " + ldap);
       return new Promise((resolve, reject) => {
-        this.http.get(this.api.url + "student/" + ldap + "/")
+        this.http.post(this.api.url + "connect/",{
+            username: ldap,
+            password: password,
+          })
         .map(res => res.json())
         .subscribe(data => {
-          this.connected = (data.ldap == ldap);
+          this.connected = true;
           if(this.connected){
             this.ldap = ldap;
           }
+          console.log(data);
+          this.storage.set("token", data.token);
+          this.storage.set("ldap", ldap);
           resolve(this.connected);
         }, err => {
           console.log(err);
