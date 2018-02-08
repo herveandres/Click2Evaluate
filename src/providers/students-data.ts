@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
@@ -22,7 +22,7 @@ export class StudentsData{
   courses: Array<CourseData> = []; // list of courses
   notifPermission: boolean = false; // to know if there is a notif scheduled
 
-  constructor(public http: Http,
+  constructor(public http: HttpClient,
               public surveyData:SurveyData,
               private storage: Storage,
               public api: API,
@@ -63,8 +63,7 @@ export class StudentsData{
             username: ldap,
             password: password,
           })
-        .map(res => res.json())
-        .subscribe(data => {
+        .subscribe((data: any) => {
           this.connected = true;
           if(this.connected){
             this.ldap = ldap;
@@ -102,8 +101,7 @@ export class StudentsData{
     this.ldap = ldap;
     return new Promise(resolve => {
       this.http.get('assets/data_offline_version/data_students.json')
-      .map(res => res.json())
-      .subscribe(data => {
+      .subscribe((data: any) => {
         this.connected = (data.filter(h => h.LOGIN_LDAP == this.ldap).length > 0);
         console.log("Connected ? " + this.connected);
         resolve(this.connected);
@@ -145,8 +143,7 @@ export class StudentsData{
                 "Authorization": 'Token ' + this.token
             }
           })
-          .map(res => res.json())
-          .subscribe(courses =>
+          .subscribe((courses: any) =>
             {
               console.log(courses);
               this.courses = [];
@@ -304,7 +301,6 @@ export class StudentsData{
         return new Promise(resolve =>
           {
           this.http.get('assets/data_offline_version/data_students.json')
-          .map(res => res.json())
           .subscribe(courses =>
             {
             let raw:any = courses.filter(h => h.LOGIN_LDAP == this.ldap);
@@ -327,7 +323,6 @@ export class StudentsData{
     console.log("Trying to add course with id : " + code_module);
     return new Promise(resolve => {
       this.http.get('assets/data_offline_version/data_courses.json')
-      .map(res => res.json())
       .subscribe(data => {
         let course = new CourseData(data.filter(h => h.Id == code_module)[0], group, answered);
         this.courses.push(course);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
@@ -19,7 +19,7 @@ export class SurveyData{
   course: CourseData;
   survey: Array<Question> = []  // both questions and answers
 
-  constructor(public http: Http, private storage: Storage, private api: API, private alertCtrl:AlertController){
+  constructor(public http: HttpClient, private storage: Storage, private api: API, private alertCtrl:AlertController){
   }
 
   // save the survey in the local storage
@@ -50,8 +50,7 @@ export class SurveyData{
             "Authorization": 'Token ' + token
         }
       })
-      .map(res => res.json())
-      .subscribe(s =>
+      .subscribe((s: any) =>
       {
             Promise.all(s.map(q => {
               return new Promise((resolve, reject) => {

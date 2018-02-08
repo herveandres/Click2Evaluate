@@ -13,7 +13,7 @@ import { SurveyPage } from './../pages/survey/survey';
 import { CoursesModalPage } from '../pages/coursesModal/coursesModal';
 
 import { Autosize } from '../directives/autosize/autosize';
-import {HttpModule} from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import {HttpModule} from '@angular/http';
     BrowserModule,
     IonicModule.forRoot(Click2Evaluate),
     IonicStorageModule.forRoot(),
-    HttpModule
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
