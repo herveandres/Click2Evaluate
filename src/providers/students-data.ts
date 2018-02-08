@@ -17,6 +17,7 @@ import { SurveyData } from '../providers/survey-data';
 @Injectable()
 export class StudentsData{
   ldap: string; // id like vorname.name@enpc.fr
+  token: any; // token used for authentication
   connected: boolean = false;
   courses: Array<CourseData> = []; // list of courses
   notifPermission: boolean = false; // to know if there is a notif scheduled
@@ -33,15 +34,18 @@ export class StudentsData{
 
   isAlreadyConnected(){
       return new Promise(resolve => {
-          this.storage.get("ldap").then(res => {
+          this.storage.get("token").then(token => {
+            this.storage.get("ldap").then(res => {
             console.log(res)
             this.ldap = res;
-            if(this.ldap != null){
+            this.token = token;
+            if(this.ldap != null && this.token != null){
               this.connected = true;
             }else{
               this.connected = false;
             }
             resolve (this.connected);
+        })
       })
     });
   }
@@ -49,12 +53,6 @@ export class StudentsData{
   connect(ldap: string, password: string, stayConnected: boolean){
     // stayConnected == true now
     stayConnected = true;
-
-    if(stayConnected){
-
-    }else{
-      this.storage.remove("ldap");
-    }
 
     if(this.api.noServer){
       return this.connect_noServer(ldap, password, stayConnected)
@@ -70,6 +68,7 @@ export class StudentsData{
           this.connected = true;
           if(this.connected){
             this.ldap = ldap;
+            this.token = data.token;
           }
           console.log(data);
           this.storage.set("token", data.token);
@@ -77,10 +76,10 @@ export class StudentsData{
           resolve(this.connected);
         }, err => {
           console.log(err);
-          if(err.status == 500){
+          if(err.status == 400){
             let alert = this.alertCtrl.create({
               title: 'Identifiant incorrect',
-              subTitle: "L'identifiant est incorrect.",
+              subTitle: "L'identifiant ou le mot de passe est incorrect.",
               buttons: ['Ok']
             });
             alert.present();
@@ -140,7 +139,12 @@ export class StudentsData{
             url = this.api.url + "courses/" + this.ldap + "/";
           }
           console.log("Request : "+ url);
-          this.http.get(url)
+          console.log(this.token);
+          this.http.get(url, {
+            headers: {
+                "Authorization": 'Token ' + this.token
+            }
+          })
           .map(res => res.json())
           .subscribe(courses =>
             {
@@ -153,16 +157,24 @@ export class StudentsData{
                 });
                 resolve(this.courses);
             }, err => {
-              let alert = this.alertCtrl.create({
-                title: "Pas d'internet",
-                subTitle: "L'application n'arrive pas à accéder au serveur, réessayez ultérieurement.",
-                buttons: ['Ok']
-              });
-              alert.present();
-            })
+              if(err.status == 401){
+                let alert = this.alertCtrl.create({
+                  title: 'Authentification impossible',
+                  subTitle: "Vous devez vous reconnecter",
+                  buttons: ['Ok']
+                });
+                alert.present();
+              }else{
+                let alert = this.alertCtrl.create({
+                  title: 'Aucun accès',
+                  subTitle: "L'application n'arrive pas à accéder au serveur d'authentification, réessayez ultérieurement.",
+                  buttons: ['Ok']
+                });
+                alert.present();
+            }
         })
-    }
-  }
+    });
+  }}
 
   sort_courses(course1: CourseData, course2: CourseData){
     if(course1.label < course2.label){
@@ -172,6 +184,7 @@ export class StudentsData{
       return 1;
     }
   }
+
   getCourses(){
     console.log("Trying to get courses for : " + this.ldap);
     if(this.courses.length > 0){
@@ -180,10 +193,11 @@ export class StudentsData{
     }
     if(this.connected){
       // get courses in local storage
-      if(this.getCoursesFromLocalStorage()){
-        this.courses.sort(this.sort_courses);
-        return true;
-      }else{
+      // We don't get courses from local storage anymore. We need internet connexion
+      //if(this.getCoursesFromLocalStorage()){
+      //  this.courses.sort(this.sort_courses);
+      //  return true;
+      //}else{
         this.getCoursesOnline().then(res => {
           console.log(res);
           this.courses.sort(this.sort_courses);
@@ -197,7 +211,7 @@ export class StudentsData{
         });
         return true;
       }
-    }
+    //}
   }
 
   saveCourses(){
@@ -323,7 +337,5 @@ export class StudentsData{
         resolve(this.courses);})
       })
   }*/
-
-
 
 }

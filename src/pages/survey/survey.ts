@@ -15,7 +15,7 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'survey.html'
 })
 export class SurveyPage {
-  base_questions:Array<Question> = []; 
+  base_questions:Array<Question> = [];
   additional_questions: {[id:number]:Array<Question>;}={};
   lock_swipe: boolean;
   @ViewChild(Slides) slides: Slides;
@@ -77,7 +77,7 @@ export class SurveyPage {
   }
 
   send_survey(){
-    this.surveyData.uploadSurvey();
+    this.surveyData.uploadSurvey(this.studentsData.token);
     this.rescheduleReminfNotif();
     this.navCtrl.setRoot(MenuPage);
   }
@@ -97,15 +97,15 @@ export class SurveyPage {
       if(this.base_questions.every((q:Question,i:number,tab:Question[])=>{return q.id != question.id;})){
         console.log("Insertion");
         this.additional_questions[parent_id].push(question);
-        this.base_questions.splice(index,0,question);//insert the subquestion just after its parent 
+        this.base_questions.splice(index,0,question);//insert the subquestion just after its parent
         console.log(this.base_questions);
         console.log(this.additional_questions[parent_id]);
       }
   }
    //Remove a question from base_question and updates additional_questions.
   delete_question(parent_position:number,relative_position:number, parent_id:number){//relative_position is the relative position of the subquestion to remove relative to its parent question
-    this.base_questions.splice(parent_position+relative_position+1,1); 
-    this.additional_questions[parent_id].splice(relative_position,1); 
+    this.base_questions.splice(parent_position+relative_position+1,1);
+    this.additional_questions[parent_id].splice(relative_position,1);
     console.log("Suppression");
     console.log(this.base_questions);
     console.log(this.additional_questions[parent_id]);
@@ -114,7 +114,7 @@ export class SurveyPage {
   displayable(question:Question){
     if(!question.isSub){ //We always display a question which isn't a subquestion
       return true;
-    }else{//Case of a subquestion 
+    }else{//Case of a subquestion
       let answer: any = this.surveyData.survey[question.parentsQuestionPosition].answer;
       let parent_position : number;
       //We look for the position of its parent in base_question
@@ -125,7 +125,7 @@ export class SurveyPage {
         }
       }
       let parent_id : number = this.base_questions[parent_position].id;
-      if(typeof answer == "number"){ //We separate the case of a number answer because ionic considers that "" = 0 
+      if(typeof answer == "number"){ //We separate the case of a number answer because ionic considers that "" = 0
           if(answer == question.parentsQuestionValue){//the subquestion must be displayed because the user answered something that triggers this subquestion
             this.insert_question(question,parent_position+this.additional_questions[parent_id].length+1,parent_id);
             return true;
@@ -133,7 +133,7 @@ export class SurveyPage {
             for(let id in this.additional_questions){
                 //We ensure that the subquestion is not in base_question
                 if(this.surveyData.survey[question.parentsQuestionPosition].id == parseInt(id)
-                     && this.additional_questions[parseInt(id)].indexOf(question)>-1){ 
+                     && this.additional_questions[parseInt(id)].indexOf(question)>-1){
                     this.delete_question(parent_position,this.additional_questions[parseInt(id)].indexOf(question),parent_id);
                 }
             }

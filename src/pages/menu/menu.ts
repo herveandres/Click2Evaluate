@@ -50,7 +50,7 @@ export class MenuPage {
   }
 
   openSurvey(course: CourseData){
-      this.surveyData.getSurvey(course).then(res => {this.navCtrl.push(SurveyPage);}, err => {
+      this.surveyData.getSurvey(course, this.studentsData.token).then(res => {this.navCtrl.push(SurveyPage);}, err => {
         let alert = this.alertCtrl.create({
           title: "Pas d'internet",
           subTitle: "Nous n'arrivons pas à accéder à notre serveur pour télécharger le questionnaire. veuillez réessayer ultérieurement.",
@@ -60,6 +60,7 @@ export class MenuPage {
       });
   }
 
+  // download courses from server. Unused
   refresh_data(){
     this.studentsData.getCourses();
   }

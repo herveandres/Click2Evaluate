@@ -32,7 +32,7 @@ export class SurveyData{
 
   // generates the survey corresponding to the course and
   // look in the local storage if we already begin it
-  getSurvey(course: CourseData){
+  getSurvey(course: CourseData, token: any){
     this.course = course;
     this.survey = [];
 
@@ -45,7 +45,11 @@ export class SurveyData{
         url = this.api.url + 'typeForm/' + course.typeForm + "/";
       }
       console.log("Request : " + url);
-      this.http.get(url)
+      this.http.get(url, {
+        headers: {
+            "Authorization": 'Token ' + token
+        }
+      })
       .map(res => res.json())
       .subscribe(s =>
       {
@@ -63,15 +67,31 @@ export class SurveyData{
                 }, err => {reject(err);})
               });
             })).then(values => {resolve(this.survey);});
-        }, err => {reject(err);});
-      })
-}
+        }, err => {
+          if(err.status == 401){
+            let alert = this.alertCtrl.create({
+              title: 'Authentification impossible',
+              subTitle: "Vous devez vous reconnecter",
+              buttons: ['Ok']
+            });
+            alert.present();
+          }else{
+            let alert = this.alertCtrl.create({
+              title: 'Aucun accès',
+              subTitle: "L'application n'arrive pas à accéder au serveur d'authentification, réessayez ultérieurement.",
+              buttons: ['Ok']
+            });
+            alert.present();
+        }
+      });
+    })
+  }
   get_survey(){
     return this.survey;
   }
 
   // upload the survey
-  uploadSurvey(){
+  uploadSurvey(token: any){
     if(!this.api.noServer){
       let url: string = this.api.url + "answer/" + this.course.id + "/";
       Promise.all(this.survey.map(
@@ -79,11 +99,16 @@ export class SurveyData{
           return new Promise((resolve, reject) => {
             let ans;
             if(question.type_question == 'select'){
-              ans = { answer: question.answer.join(';')};
+              ans = {answer: question.answer.join(';')};
             }else{
-              ans = { answer: question.answer};
+              ans = { answer: question.answer };
             }
-            this.http.post(url + question.id + "/", ans)
+            this.http.post(url + question.id + "/", ans,
+              {
+                headers: {
+                  "Authorization": 'Token ' + token
+                }
+              })
             .subscribe(res => {
               resolve(question);
             }, err => {
@@ -99,13 +124,21 @@ export class SurveyData{
         }
       }).catch(err =>
       {
-        console.log(err);
-        let alert = this.alertCtrl.create({
-          title: "Pas d'internet",
-          subTitle: "Nous n'arrivons pas à envoyer vos réponses à notre serveur, veuillez réessayer plus tard. Vos réponses restent sauvegardées jusqu'à votre deconnexion.",
-          buttons: ['Je le fais dès que possible']
-        });
-        alert.present();
+        if(err.status == 401){
+          let alert = this.alertCtrl.create({
+            title: 'Authentification impossible',
+            subTitle: "Vous devez vous reconnecter",
+            buttons: ['Ok']
+          });
+          alert.present();
+        }else{
+          let alert = this.alertCtrl.create({
+            title: 'Aucun accès',
+            subTitle: "Nous n'arrivons pas à envoyer vos réponses à notre serveur, veuillez réessayer plus tard. Vos réponses restent sauvegardées jusqu'à votre deconnexion.",
+            buttons: ['Je le fais dès que possible']
+          });
+          alert.present();
+        }
       })
     }else{
       this.course.answered = true;
