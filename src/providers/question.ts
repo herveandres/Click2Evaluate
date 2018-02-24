@@ -46,5 +46,11 @@ export class Question{
         this.answer = "";
      }
 
+     if(this.type_question == "number"){
+
+       this.type_data[0] = Number(this.type_data[0]);
+       this.type_data[1] = Number(this.type_data[1]);
+     }
+     console.log(this.type_data, q.type_data);
    }
 }

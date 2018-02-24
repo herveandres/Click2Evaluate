@@ -27,6 +27,7 @@
     <div *ngFor="let question of surveyData.survey">
 
         <ion-slide  *ngIf="displayable(question)">
+
           <!-- Si la question est obligatoire, on affiche un logo + 'question obligatoire' -->
           <div *ngIf='question.obligatory' class="center">
             <!--<ion-icon  name='alert'></ion-icon>-->
@@ -45,57 +46,62 @@
               {{ question.label }}
             </ion-card-content>
           </ion-card>
+            <!-- On affiche la question suivant le type de celle-ci -->
+            <ion-item *ngIf='question.type_question == "inline"'>
+              <ion-input type="text" [(ngModel)]="question.answer"
+                  placeholder="Votre réponse"[(ngModel)]="question.answer"
+                  [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">
+                </ion-input>
 
-          <!-- On affiche la question suivant le type de celle-ci -->
-          <ion-item *ngIf='question.type_question == "inline"'>
-            <ion-input type="text" [(ngModel)]="question.answer"
-                placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">
-              </ion-input>
+            </ion-item>
 
-          </ion-item>
+            <ion-item *ngIf='question.type_question == "text"'>
+              <ion-textarea autosize [(ngModel)]="question.answer"
+                placeholder="Votre réponse"[(ngModel)]="question.answer"
+                [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">
+             </ion-textarea>
+            </ion-item>
 
-          <ion-item *ngIf='question.type_question == "text"'>
-            <ion-textarea autosize [(ngModel)]="question.answer" placeholder="Votre réponse"[(ngModel)]="question.answer" [ngModelOptions]="{standalone: true}" (input)="swipe_unlock()">  </ion-textarea>
-          </ion-item>
 
-          <!-- Old version with 'ion-select' (change __selectOne__ to selectOne to test) -->
-          <ion-item *ngIf='question.type_question == "__selectOne__"'>
-            <ion-select  multiple="false" [(ngModel)]="question.answer">
-             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
-               {{ choice }}
-             </ion-option>
-           </ion-select>
-         </ion-item>
-
-         <ion-list *ngIf='question.type_question == "selectOne"' radio-group [(ngModel)]="question.answer">
-           <ion-item *ngFor="let choice of question.type_data, let index = index">
-             <ion-label  class='line-break'>{{ choice }}</ion-label>
-             <ion-radio [value]="index" (ionSelect)="swipe_unlock()"></ion-radio>
-           </ion-item>
-         </ion-list>
-
-         <div >
-           <ion-list *ngIf='question.type_question == "select"'>
+           <ion-list *ngIf='question.type_question == "selectOne"' radio-group [(ngModel)]="question.answer">
              <ion-item *ngFor="let choice of question.type_data, let index = index">
-               <ion-label class='line-break'>{{ choice }}</ion-label>
-               <ion-checkbox [(ngModel)]="question.answer[index]" (ionSelect)="swipe_unlock()"></ion-checkbox>
+               <ion-label  class='line-break'>{{ choice }}</ion-label>
+               <ion-radio [value]="index" (ionSelect)="swipe_unlock()"></ion-radio>
              </ion-item>
            </ion-list>
-        </div>
 
-          <ion-item *ngIf='question.type_question == "seilect"'>
-            <ion-select  multiple="true" [(ngModel)]="question.answer">
-             <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
-               {{ choice }}
-             </ion-option>
-           </ion-select>
-         </ion-item>
+             <ion-list *ngIf='question.type_question == "select"'>
+               <ion-item *ngFor="let choice of question.type_data, let index = index">
+                 <ion-label class='line-break'>{{ choice }}</ion-label>
+                 <ion-checkbox [(ngModel)]="question.answer[index]" (ionSelect)="swipe_unlock()"></ion-checkbox>
+               </ion-item>
+             </ion-list>
+
 
           <ion-item *ngIf='question.type_question == "number"'>
-             <ion-input type="number" placeholder="Combien ?" [(ngModel)]="question.answer" (input)="swipe_unlock()"></ion-input>
+             <ion-input type="number" placeholder="Combien ?"
+                [(ngModel)]="question.answer" (input)="swipe_unlock()"
+                [min]="question.type_data[0]" [max]="question.type_data[1]">
+              </ion-input>
           </ion-item>
+          <!--
+            <ion-item *ngIf='question.type_question == "seilect"'>
+              <ion-select  multiple="true" [(ngModel)]="question.answer">
+               <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
+                 {{ choice }}
+               </ion-option>
+             </ion-select>
+           </ion-item>
+           <!-- Old version with 'ion-select' (change __selectOne__ to selectOne to test)
 
-          <!--<div (ionSlideDrag)='check_possible(question)'></div>-->
+           <ion-item *ngIf='question.type_question == "__selectOne__"'>
+             <ion-select  multiple="false" [(ngModel)]="question.answer">
+              <ion-option *ngFor="let choice of question.type_data let index = index" [value]=index (ionSelect)="swipe_unlock()">
+                {{ choice }}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        -->
         </ion-slide>
 
     </div>
@@ -108,7 +114,7 @@
           Fin du questionnaire !
         </ion-card-header>
         <ion-card-content>
-          Ce questionnaire est maintenant terminé. Nous vous remercions pour vos réponses !
+          Ce questionnaire est maintenant terminé. Nous vous remercions pour toutes vos réponses !
         </ion-card-content>
       </ion-card>
 
@@ -120,3 +126,23 @@
 </ion-slides>
 
 </ion-content>
+
+<ion-footer>
+ <ion-toolbar>
+   <ion-row>
+    <ion-col>
+      <button ion-button icon-only (click)='slides.slidePrev()' left>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+    </ion-col>
+    <ion-col>
+      <button class="buttonRight" ion-button icon-only (click)='slides.slideNext()'right>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+ </ion-toolbar>
+</ion-footer>

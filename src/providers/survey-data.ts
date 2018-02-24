@@ -40,7 +40,7 @@ export class SurveyData{
     return new Promise((resolve, reject) => {
       let url: string;
       if(this.api.noServer){
-        url = 'assets/data/typeForm/' + course.typeForm + ".json";
+        url = 'assets/data_offline_version/typeForm/' + course.typeForm + ".json";
       }else{
         url = this.api.url + 'typeForm/' + course.typeForm + "/";
       }

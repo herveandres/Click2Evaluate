@@ -1,19 +1,20 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Click2Evaluate
+      Éval'Ponts
     </ion-title>
     <ion-buttons end>
+      <!-- Useless now, refresh_data is automatic becas it's easier -->
       <!--<button ion-button icon-left (click)='refresh_data()' end>
         <ion-icon name="refresh"></ion-icon>
       </button>-->
-      <button ion-button icon-left (click)='display_help()' end>
+      <button ion-button icon-only (click)='display_help()' end>
         <ion-icon name="help-circle"></ion-icon>
       </button>
-      <button ion-button icon-left (click)='disconnect()' end>
+      <button ion-button icon-only (click)='disconnect()' end>
         <ion-icon name="log-out"></ion-icon>
       </button>
-      <button ion-button icon-left (click)='display_credits()' end>
+      <button ion-button icon-only (click)='display_credits()' end>
         <ion-icon name="information-circle"></ion-icon>
       </button>
     </ion-buttons>
@@ -22,6 +23,7 @@
 </ion-header>
 
 <ion-content padding>
+
   <div *ngIf="studentsData.connected">
     <ion-card text-center>
       <ion-card-header class="line-break">

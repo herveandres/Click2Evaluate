@@ -209,7 +209,7 @@
         "id":18,
         "position":17,
         "type_question":"number",
-        "type_data":"0,10",
+        "type_data":"0;10",
         "obligatory": false,
         "label":"Combien d'heures (hors classe), en moyenne, consacriez-vous chaque semaine à ce module ?",
         "summary":"Temps consacré",
