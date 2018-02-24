@@ -1,17 +1,17 @@
 [
- {  
+ {
     "id": 1,
     "id_course": "SPORT",
     "label": "Module de Sport",
     "commissionsDate": "2018-02-14T12:00:00Z",
     "availableDate": "2017-12-22T11:00:00Z",
     "typeForm": "Classique",
-    "delegate": "jean.tirole@enpc.fr",
+    "delegate": "henri.navier@enpc.fr",
     "group": 0,
-    "answered": false,    
+    "answered": false,
     "submissionDate": "2018-01-03T14:45:46.969631Z"
   },
- {  
+ {
     "id": 2,
     "id_course": "MATHS",
     "label": "Analyse et calcul scientifique",
@@ -20,10 +20,10 @@
     "typeForm": "Classique",
     "delegate": "henri.becquerel@enpc.fr",
     "group": 1,
-    "answered": false,    
+    "answered": false,
     "submissionDate": "2018-01-03T14:45:46.969631Z"
   },
-  {  
+  {
     "id": 3,
     "id_course": "MECA",
     "label": "Mécanique des milieux continus",
@@ -32,7 +32,7 @@
     "typeForm": "Classique",
     "delegate": "raymond.aubrac@enpc.fr",
     "group": 0,
-    "answered": false,    
+    "answered": false,
     "submissionDate": "2018-01-03T14:45:46.969631Z"
   }
 ]

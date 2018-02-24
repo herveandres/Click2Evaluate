@@ -68,8 +68,8 @@
   {
     "NOM": "TIROLE",
     "PRENOM": "Jean",
-    "LOGIN_LDAP": "jean.tirole@enpc.fr",
-    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "LOGIN_LDAP": "henri.navier@enpc.fr",
+    "MAIL": "henri.navier@eleves.enpc.fr",
     "DEPARTEMENT": "IMI",
     "LIBELLE_MODULE": "Module de sport",
     "CODE_MODULE": "SPORT",
@@ -79,8 +79,8 @@
   {
     "NOM": "TIROLE",
     "PRENOM": "Jean",
-    "LOGIN_LDAP": "jean.tirole@enpc.fr",
-    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "LOGIN_LDAP": "henri.navier@enpc.fr",
+    "MAIL": "henri.navier@eleves.enpc.fr",
     "DEPARTEMENT": "IMI",
     "LIBELLE_MODULE": "Analyse et calcul scientifique",
     "CODE_MODULE": "MATHS",
@@ -90,8 +90,8 @@
   {
     "NOM": "TIROLE",
     "PRENOM": "Jean",
-    "LOGIN_LDAP": "jean.tirole@enpc.fr",
-    "MAIL": "jean.tirole@eleves.enpc.fr",
+    "LOGIN_LDAP": "henri.navier@enpc.fr",
+    "MAIL": "henri.navier@eleves.enpc.fr",
     "DEPARTEMENT": "IMI",
     "LIBELLE_MODULE": "Mécanique des milieux continus",
     "CODE_MODULE": "MECA",
