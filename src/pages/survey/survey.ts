@@ -52,7 +52,6 @@ export class SurveyPage {
       }
     }
   }
-
   //Called when the user answers to a question
   swipe_unlock(){
       this.slides.lockSwipes(false);
