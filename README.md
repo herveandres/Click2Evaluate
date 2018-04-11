@@ -27,8 +27,8 @@ The repo is available here: https://github.com/HerrVey/Click2Evaluate
 
 ## Backend
 The backend is made with Django and has two parts:
-*A REST API in order to synchronize the data with the app
-*A control panel in order to simplify the management of a survey campaign
+* A REST API in order to synchronize the data with the app
+* A control panel in order to simplify the management of a survey campaign
 
 The repo is available here: https://github.com/Marc-AntoineA/Click2Evaluate_server
 
