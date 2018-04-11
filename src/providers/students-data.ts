@@ -274,7 +274,7 @@ export class StudentsData{
           tomorrow.setHours(18,0,0);
           this.localNotif.schedule({
             id: 1,
-            title: 'Click2Evaluate',
+            title: 'Éval\'Ponts',
             text: 'Il te reste des cours à évaluer !',
             firstAt: tomorrow,
             every: "week"// 3 days in second

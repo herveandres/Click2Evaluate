@@ -67,7 +67,10 @@ export class MenuPage {
   display_help(){
     let alert = this.alertCtrl.create({
       title: 'Aide',
-      message: 'Faites glisser un cours vers la gauche pour l\'évaluer. \n Cliquez sur un cours pour obtenir toutes les informations relatives à ce cours.\n \nUn icône Warning est placé à côté des cours dont vous êtes responsables',
+      message: '<ul>\
+      <li> Faites glisser un cours vers la gauche pour l\'évaluer</li>\
+      <li> liquez sur un cours pour obtenir toutes les informations relatives à ce cours.</li>\
+      <li> Un icône Warning est placé à côté des cours dont vous êtes responsables</li></ul>',
       buttons: ['Ok']
     });
     alert.present();
@@ -75,7 +78,13 @@ export class MenuPage {
   display_credits(){
     let alert = this.alertCtrl.create({
       title: 'Crédits',
-      message: 'Cette application a été réalisée par Hervé ANDRES, Marc-Antoine AUGÉ,Bastien DÉCHAMPS et Michaël KARPE en collaboration avec Barbara GERARD pour l\'aspect pratique et Xavier CLERC pour l\'aspect technique',
+      message: 'Cette application a été réalisée par Hervé Andres, Marc-Antoine Augé,\
+      Bastien Déchamps et Michaël Karpe en collaboration avec Barbara Gérard pour\
+      l\'aspect pratique et Xavier Clerc pour l\'aspect technique pendant l\'année scolaire\
+      2017/2018.<br/>\
+      L\'application s\'accompagne d\'un outil d\'administration complet dont les sources sont\
+      disponibles sur Github <a href="https://github.com/HerrVey/Click2Evaluate">ici</a> et \
+      <a href="https://github.com/Marc-AntoineA/Click2Evaluate_server">ici</a>',
       buttons: ['Ok']
     });
     alert.present();
